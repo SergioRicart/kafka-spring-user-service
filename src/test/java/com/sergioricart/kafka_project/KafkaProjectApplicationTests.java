@@ -1,10 +1,10 @@
-package com.sergioricart.kafka_proyect;
+package com.sergioricart.kafka_project;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class KafkaProyectApplicationTests {
+class KafkaProjectApplicationTests {
 
 	@Test
 	void contextLoads() {

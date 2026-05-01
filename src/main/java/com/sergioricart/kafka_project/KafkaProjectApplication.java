@@ -1,13 +1,13 @@
-package com.sergioricart.kafka_proyect;
+package com.sergioricart.kafka_project;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class KafkaProyectApplication {
+public class KafkaProjectApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(KafkaProyectApplication.class, args);
+		SpringApplication.run(KafkaProjectApplication.class, args);
 	}
 
 }
