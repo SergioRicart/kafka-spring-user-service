@@ -26,9 +26,7 @@ public class UserController {
                 .setTimestamp(System.currentTimeMillis())
                 .build();
 
-        System.out.println("User created in controller");
-
-        kafkaProducer.send("user-events", userCreatedEvent);
+        kafkaProducer.send("user.events", userCreatedEvent);
     }
 
 

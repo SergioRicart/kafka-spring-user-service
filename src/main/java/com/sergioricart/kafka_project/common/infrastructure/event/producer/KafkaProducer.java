@@ -21,14 +21,19 @@ public class KafkaProducer {
         log.info("Sending message to topic {}. record {}", topic, record);
 
         String uuid = UUID.randomUUID().toString();
+
         CompletableFuture<SendResult<String, GenericRecord>> sendResultFuture=  kafkaTemplate.send(topic, uuid ,record);
 
         sendResultFuture.whenComplete((sendResult, throwable) -> {
             if (throwable == null){
+
                 log.info("Sent message to topic {}. record {}. record uuid {}. Offset: {}",
                         topic, record, uuid, sendResult.getRecordMetadata().offset());
+
             }else{
+
                 log.error("Error sending record to topic: {}. Record {}. Record UUID: {}", topic, record, uuid, throwable);
+
             }
         });
     }
