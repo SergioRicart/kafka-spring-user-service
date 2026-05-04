@@ -1,4 +1,4 @@
-package com.sergioricart.kafka_project.user.application;
+package com.sergioricart.kafka_project.user.application.created;
 
 import com.sergioricart.kafka_project.common.application.CommandHandler;
 import com.sergioricart.kafka_project.common.application.VoidResponse;
@@ -17,18 +17,18 @@ public class UserCreatedHandler implements CommandHandler<UserCreatedCommand, Vo
     private final UserRepository userRepository;
 
     @Override
-    public VoidResponse handle(UserCreatedCommand command) {
+    public VoidResponse handle(UserCreatedCommand userCommand) {
 
-        log.info("UserCreatedHandler received command {}", command);
+        log.info("UserCreatedHandler received command {}", userCommand);
 
         User user = User.builder()
-                .id(command.getId())
-                .firstname(command.getFirstname())
-                .lastname(command.getLastname())
-                .email(command.getEmail())
-                .role(command.getRole())
+                .id(userCommand.getId())
+                .firstname(userCommand.getFirstname())
+                .lastname(userCommand.getLastname())
+                .email(userCommand.getEmail())
+                .role(userCommand.getRole())
                 .password(RandomStringUtils.randomAlphanumeric(10))
-                .createdAt(command.getTimestamp())
+                .createdAt(userCommand.getTimestamp())
                 .updatedAt(null)
                 .deletedAt(null)
                 .build();
