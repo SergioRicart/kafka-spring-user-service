@@ -5,6 +5,7 @@ import com.sergioricart.kafka_project.common.infrastructure.event.producer.Kafka
 import com.sergioricart.kafka_project.user.domain.entiry.User;
 import com.sergioricart.kafka_project.user.domain.port.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,9 @@ public class UserController {
     private final KafkaProducer kafkaProducer;
 
     private final UserRepository userRepository;
+
+    @Value("${app.kafka.topics.user}")
+    private String topic;
 
 
     @GetMapping("/create")
@@ -34,7 +38,7 @@ public class UserController {
                 .setTimestamp(System.currentTimeMillis())
                 .build();
 
-        kafkaProducer.send("user.events", userCreatedEvent);
+        kafkaProducer.send(topic, userCreatedEvent);
     }
 
     @GetMapping("/{id}")
