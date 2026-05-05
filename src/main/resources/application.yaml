@@ -3,9 +3,9 @@ spring:
     name: kafka-project
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/user_db
+    url: jdbc:postgresql://localhost:5433/user_db
     username: sricart
-    password: 123456
+    password: wW08yIkj76oiO36Mjx7MRb0GV8wLzRk9Fh4dqkzutTWtigt5Nu
     driver-class-name: org.postgresql.Driver
 
   jpa:
