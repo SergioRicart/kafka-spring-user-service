@@ -2,7 +2,20 @@ spring:
   application:
     name: kafka-project
 
+  datasource:
+    url: jdbc:postgresql://localhost:5432/user_db
+    username: sricart
+    password: 123456
+    driver-class-name: org.postgresql.Driver
 
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
 
 app:
   kafka:
