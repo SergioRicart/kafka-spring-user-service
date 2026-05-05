@@ -112,11 +112,11 @@ services:
     container_name: user_db
     restart: always
     environment:
-      POSTGRES_USER: sricart      # TEMP AND NOT IN PRODUCTION
-      POSTGRES_PASSWORD: 123456   # TEMP AND NOT IN PRODUCTION
-      POSTGRES_DB: user_db
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
     ports:
-      - "5432:5432"
+      - "${DB_PORT}:5432"
     volumes:
       - user_db:/var/lib/postgresql/data
     networks:
