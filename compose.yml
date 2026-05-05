@@ -3,7 +3,7 @@ version: "3.1"
 services:
 
   zookeeper:
-    image: confluentinc/cp-zookeeper:5.4.0
+    image: confluentinc/cp-zookeeper:7.4.0
     hostname: zookeeper
     networks:
       - kafka
@@ -17,6 +17,10 @@ services:
       interval: 10s
       timeout: 10s
       retries: 5
+
+    volumes:
+      - zookeeper_data:/var/lib/zookeeper/data
+      - zookeeper_log:/var/lib/zookeeper/log
 
   broker:
     image: confluentinc/cp-server:5.4.0
@@ -37,7 +41,7 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
       KAFKA_CONFLUENT_LICENSE_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_CREATE_TOPICS: "test_topic:1:3"
+      KAFKA_CREATE_TOPICS: "test_topic:1:1"
       #      KAFKA_ADVERTISED_HOST_NAME: broker
       CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS: broker:29092
       CONFLUENT_METRICS_REPORTER_ZOOKEEPER_CONNECT: zookeeper:2181
@@ -49,6 +53,8 @@ services:
       interval: 10s
       timeout: 10s
       retries: 5
+    volumes:
+      - kafka_data:/var/lib/kafka/data
 
   schema-registry:
     image: confluentinc/cp-schema-registry:5.4.0
@@ -66,7 +72,7 @@ services:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
       SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: "zookeeper:2181"
     healthcheck:
-      test: [ "CMD", "nc", "-z", "localhost", "8081" ]
+      test: ["CMD", "curl", "-f", "http://localhost:8081/"]
       interval: 10s
       timeout: 10s
       retries: 5
@@ -95,11 +101,32 @@ services:
       CONFLUENT_METRICS_TOPIC_REPLICATION: 1
       PORT: 9021
     healthcheck:
-      test: [ "CMD", "nc", "-z", "localhost", "9021" ]
+      test: ["CMD", "curl", "-f", "http://localhost:9021/"]
       interval: 10s
       timeout: 10s
       retries: 7
 
+
+  postgres-user:
+    image: postgres:16
+    container_name: user_db
+    restart: always
+    environment:
+      POSTGRES_USER: sricart      # TEMP AND NOT IN PRODUCTION
+      POSTGRES_PASSWORD: 123456   # TEMP AND NOT IN PRODUCTION
+      POSTGRES_DB: user_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - user_db:/var/lib/postgresql/data
+    networks:
+      - kafka
+
+volumes:
+  user_db:
+  kafka_data:
+  zookeeper_data:
+  zookeeper_log:
 
 networks:
   kafka:
