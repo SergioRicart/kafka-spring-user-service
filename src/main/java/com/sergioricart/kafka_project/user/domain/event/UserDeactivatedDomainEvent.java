@@ -10,7 +10,7 @@ import java.time.Instant;
 @Builder
 public class UserDeactivatedDomainEvent {
 
-    private Long id;
+    private String id;
     private Long timestamp;
 
 

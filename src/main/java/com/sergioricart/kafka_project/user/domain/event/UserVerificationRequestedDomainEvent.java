@@ -10,7 +10,7 @@ import java.time.Instant;
 @Builder
 public class UserVerificationRequestedDomainEvent {
 
-    private Long id;
+    private String id;
     private String email;
     private Long timestamp;
 

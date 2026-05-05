@@ -25,7 +25,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Optional<User> findById(Long id) {
+    public Optional<User> findById(String id) {
         return userEntityList.stream().filter(
                 userEntity -> userEntity.getId()
                         .equals(id))
@@ -34,7 +34,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(String id) {
         userEntityList.removeIf(userEntity -> userEntity.getId().equals(id));
     }
 

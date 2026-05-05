@@ -28,8 +28,8 @@ public class UserCreatedHandler implements CommandHandler<UserCreatedCommand, Vo
 
         User user = User.builder()
                 .id(userCommand.getId())
-                .firstname(userCommand.getFirstname())
-                .lastname(userCommand.getLastname())
+                .firstName(userCommand.getFirstName())
+                .lastName(userCommand.getLastName())
                 .email(userCommand.getEmail())
                 .role(userCommand.getRole())
                 .password(RandomStringUtils.randomAlphanumeric(10))

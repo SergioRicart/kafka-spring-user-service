@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -29,11 +30,13 @@ public class UserController {
 
         System.out.println("Creating user");
 
+        String uuid = UUID.randomUUID().toString();
+
         UserCreatedEvent userCreatedEvent = UserCreatedEvent.newBuilder()
-                .setId(1L)
+                .setId(uuid)
                 .setEmail("sergioricart@gmail.com")
-                .setFirstname("Sergio")
-                .setLastname("Ricart")
+                .setFirstName("Sergio")
+                .setLastName("Ricart")
                 .setRole("USER")
                 .setTimestamp(System.currentTimeMillis())
                 .build();
@@ -42,7 +45,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUser(@PathVariable Long id) {
+    public ResponseEntity<User> getUser(@PathVariable String id) {
         Optional<User> optionalUser = userRepository.findById(id);
 
         return optionalUser

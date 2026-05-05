@@ -5,14 +5,14 @@
   "fields": [
     {
       "name": "id",
-      "type": "long"
-    },
-    {
-      "name": "firstname",
       "type": "string"
     },
     {
-      "name": "lastname",
+      "name": "firstName",
+      "type": "string"
+    },
+    {
+      "name": "lastName",
       "type": "string"
     },
     {
@@ -21,6 +21,9 @@
     },
     {
       "name": "role",
+      "type": "string"
+    },{
+      "name": "password",
       "type": "string"
     },
     {
