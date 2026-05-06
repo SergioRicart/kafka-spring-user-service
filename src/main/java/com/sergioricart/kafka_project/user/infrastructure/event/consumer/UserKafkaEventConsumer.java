@@ -2,6 +2,7 @@ package com.sergioricart.kafka_project.user.infrastructure.event.consumer;
 
 import com.sergioricart.kafka_project.common.infrastructure.event.consumer.EventSpecificConsummer;
 import com.sergioricart.kafka_project.common.infrastructure.event.util.MessagingUtil;
+import com.sergioricart.kafka_project.user.domain.constant.UserConstants;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.avro.generic.GenericRecord;
@@ -37,7 +38,7 @@ public class UserKafkaEventConsumer implements Consumer<Message<GenericRecord>> 
     };
 
     @SneakyThrows
-    @KafkaListener(topics = "${app.kafka.topics.user}", groupId = "${app.kafka.group-id}", containerFactory = "kafkaListenerContainerFactory")
+    @KafkaListener(topics = UserConstants.USER_TOPIC, groupId = "${app.kafka.group-id}", containerFactory = "kafkaListenerContainerFactory")
     @Override
     public void accept(Message<GenericRecord> genericRecordMessage) {
 

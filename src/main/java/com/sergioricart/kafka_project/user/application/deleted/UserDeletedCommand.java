@@ -10,7 +10,7 @@ import java.time.Instant;
 @Data
 public class UserDeletedCommand implements Command<VoidResponse> {
 
-    private Long id;
+    private String id;
     private Instant timestamp;
 
 }

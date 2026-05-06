@@ -36,21 +36,21 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: String
           examples:
-            - 1
-        firstname:
+            - 02489f68-2603-42d7-b494-42a95689cd16
+        firstName:
           type: string
           examples:
-            - David
-        lastname:
+            - Sergio
+        lastName:
           type: string
           examples:
-            - Jimenez
+            - Ricart
         email:
           type: string
           examples:
-            - support@davinchicoder.dev
+            - sergiricartt@gmail.com
         role:
           type: string
           examples:

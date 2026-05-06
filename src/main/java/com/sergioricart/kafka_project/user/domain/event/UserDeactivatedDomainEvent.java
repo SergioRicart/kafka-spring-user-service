@@ -1,6 +1,7 @@
 package com.sergioricart.kafka_project.user.domain.event;
 
 import com.sergioricart.kafka_project.user.domain.entiry.User;
+import com.sergioricart.kafka_project.user.infrastructure.api.dto.response.UserResponse;
 import lombok.Builder;
 import lombok.Data;
 
@@ -10,9 +11,8 @@ import java.time.Instant;
 @Builder
 public class UserDeactivatedDomainEvent {
 
-    private Long id;
+    private String id;
     private Long timestamp;
-
 
     public static UserDeactivatedDomainEvent of(User user){
 

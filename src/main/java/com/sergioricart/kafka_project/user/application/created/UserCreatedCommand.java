@@ -10,10 +10,10 @@ import java.time.Instant;
 @Data
 public class UserCreatedCommand implements Command<VoidResponse> {
 
-    private Long id;
-    private String firstname;
-    private String lastname;
+    private String firstName;
+    private String lastName;
     private String email;
+    private String password;
     private Role role;
     private Instant timestamp;
 

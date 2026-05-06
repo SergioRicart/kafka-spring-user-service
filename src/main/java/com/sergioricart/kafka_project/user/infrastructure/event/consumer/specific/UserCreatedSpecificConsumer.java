@@ -21,7 +21,7 @@ public class UserCreatedSpecificConsumer implements EventSpecificConsummer<UserC
     @Override
     public void accept(Message<UserCreatedEvent> genericRecordMessage) {
 
-        log.info("Received UserCreatedSpecificConsumer from UserCreatedEvent");
+        log.info("Received UserCreatedSpecificConsumer from UserCreatedEvent {}", genericRecordMessage.getPayload());
 
         UserCreatedCommand command = userEventMapper.mapToUserCreatedCommand(genericRecordMessage.getPayload());
         mediator.dispatch(command);

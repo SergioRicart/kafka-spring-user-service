@@ -4,15 +4,11 @@
   "name": "UserCreatedEvent",
   "fields": [
     {
-      "name": "id",
-      "type": "long"
-    },
-    {
-      "name": "firstname",
+      "name": "firstName",
       "type": "string"
     },
     {
-      "name": "lastname",
+      "name": "lastName",
       "type": "string"
     },
     {
@@ -21,6 +17,9 @@
     },
     {
       "name": "role",
+      "type": "string"
+    },{
+      "name": "password",
       "type": "string"
     },
     {

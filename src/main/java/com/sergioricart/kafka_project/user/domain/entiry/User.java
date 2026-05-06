@@ -9,16 +9,15 @@ import java.time.Instant;
 @Builder
 public class User {
 
-
-    private Long id;
-    private String firstname;
-    private String lastname;
+    private String id;
+    private String firstName;
+    private String lastName;
     private String email;
     private Role role;
     private Instant timestamp;
     private String password;
-    Instant createdAt;
-    Instant updatedAt;
-    Instant deletedAt;
+    private Instant createdAt;
+    private Instant updatedAt;
+    private Instant deletedAt;
 
 }

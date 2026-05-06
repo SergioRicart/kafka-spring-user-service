@@ -10,7 +10,7 @@ import java.time.Instant;
 @Data
 public class UserEmailUpdatedCommand implements Command<VoidResponse> {
 
-    private Long id;
+    private String id;
     private String email;
     private Instant timestamp;
 

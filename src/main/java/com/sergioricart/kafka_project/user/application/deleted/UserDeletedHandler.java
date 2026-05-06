@@ -34,12 +34,10 @@ public class UserDeletedHandler implements CommandHandler<UserDeletedCommand, Vo
 
                     userRepository.save(user);
 
-                    UserDeactivatedDomainEvent userDeactivatedDomainEvent = UserDeactivatedDomainEvent.of(user);
+/*                    UserDeactivatedDomainEvent userDeactivatedDomainEvent = UserDeactivatedDomainEvent.of(user);
 
-                    userEvent.sendUserDeactivatedEvent(userDeactivatedDomainEvent);
+                    userEvent.sendUserDeactivatedEvent(userDeactivatedDomainEvent);*/
         });
-
-
 
         return new VoidResponse();
 

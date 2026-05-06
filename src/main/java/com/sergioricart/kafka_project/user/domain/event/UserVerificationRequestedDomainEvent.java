@@ -1,6 +1,7 @@
 package com.sergioricart.kafka_project.user.domain.event;
 
 import com.sergioricart.kafka_project.user.domain.entiry.User;
+import com.sergioricart.kafka_project.user.infrastructure.api.dto.response.UserResponse;
 import lombok.Builder;
 import lombok.Data;
 
@@ -10,11 +11,11 @@ import java.time.Instant;
 @Builder
 public class UserVerificationRequestedDomainEvent {
 
-    private Long id;
+    private String id;
     private String email;
     private Long timestamp;
 
-    public static UserVerificationRequestedDomainEvent of (User user) {
+    public static UserVerificationRequestedDomainEvent of(User user) {
         return UserVerificationRequestedDomainEvent.builder()
                 .id(user.getId())
                 .email(user.getEmail())
