@@ -4,10 +4,6 @@
   "name": "UserCreatedEvent",
   "fields": [
     {
-      "name": "id",
-      "type": "string"
-    },
-    {
       "name": "firstName",
       "type": "string"
     },

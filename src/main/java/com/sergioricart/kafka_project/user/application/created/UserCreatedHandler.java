@@ -25,7 +25,6 @@ public class UserCreatedHandler implements CommandHandler<UserCreatedCommand, Vo
         log.info("UserCreatedHandler received command {}", userCommand);
 
         User user = User.builder()
-                .id(userCommand.getId())
                 .firstName(userCommand.getFirstName())
                 .lastName(userCommand.getLastName())
                 .email(userCommand.getEmail())
@@ -38,9 +37,9 @@ public class UserCreatedHandler implements CommandHandler<UserCreatedCommand, Vo
 
         userRepository.save(user);
 
-        UserVerificationRequestedDomainEvent userVerificationRequestedDomainEvent = UserVerificationRequestedDomainEvent.of(user);
+/*        UserVerificationRequestedDomainEvent userVerificationRequestedDomainEvent = UserVerificationRequestedDomainEvent.of(user);
 
-        userEvent.sendUserVerificationRequestedEvent(userVerificationRequestedDomainEvent);
+        userEvent.sendUserVerificationRequestedEvent(userVerificationRequestedDomainEvent);*/
 
         return new VoidResponse();
 

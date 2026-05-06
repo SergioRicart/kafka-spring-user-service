@@ -35,10 +35,8 @@ public class UserController {
 
         log.debug("Creating user {}", userDto);
 
-        String uuid = UUID.randomUUID().toString();
 
         UserCreatedEvent userCreatedEvent = UserCreatedEvent.newBuilder()
-                .setId(uuid)
                 .setFirstName(userDto.getFirstName())
                 .setLastName(userDto.getLastName())
                 .setEmail(userDto.getEmail())
