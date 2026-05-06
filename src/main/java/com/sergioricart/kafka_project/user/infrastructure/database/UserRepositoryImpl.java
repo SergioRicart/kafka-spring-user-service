@@ -2,7 +2,6 @@ package com.sergioricart.kafka_project.user.infrastructure.database;
 
 import com.sergioricart.kafka_project.user.domain.entiry.User;
 import com.sergioricart.kafka_project.user.domain.port.UserRepository;
-import com.sergioricart.kafka_project.user.infrastructure.api.dto.response.UserResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -17,7 +16,6 @@ public class UserRepositoryImpl implements UserRepository {
     private final UserEntityMapper userEntityMapper;
     private final UserRepositoryData userRepositoryData;
 
-    // SI VIENE DESDE EL DOMAIN
     @Override
     public void save(User user) {
 
@@ -25,33 +23,22 @@ public class UserRepositoryImpl implements UserRepository {
 
         userRepositoryData.save(userEntity);
 
-    }
-
-    // SI VIENE DESDE LA API
-    @Override
-    public void save(UserResponse user) {
-
-        UserEntity userEntity = userEntityMapper.mapToUserEntity(user);
-
-        userRepositoryData.save(userEntity);
+        userEntityMapper.mapToUser(userEntity);
 
     }
 
     @Override
-    public Optional<UserResponse> findById(String id) {
+    public Optional<User> findById(String id) {
 
         return userRepositoryData.findById(id)
-                .map(userEntityMapper::mapToUserResponse);
+                .map(userEntityMapper::mapToUser);
 
-    }
-
-    @Override
-    public void deleteById(String id) {
-        userRepositoryData.deleteById(id);
     }
 
     @Override
     public boolean existByEmail(String email) {
+
         return userRepositoryData.existsByEmail(email);
+
     }
 }

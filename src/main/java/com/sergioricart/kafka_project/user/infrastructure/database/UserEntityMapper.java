@@ -11,13 +11,6 @@ public interface UserEntityMapper {
 
     UserEntity mapToUserEntity(User user);
 
-    UserEntity mapToUserEntity(UserResponse user);
-
     User mapToUser(UserEntity userEntity);
-
-    UserResponse mapToUserResponse(User user);
-
-    UserResponse mapToUserResponse(UserEntity userEntity);
-
 
 }

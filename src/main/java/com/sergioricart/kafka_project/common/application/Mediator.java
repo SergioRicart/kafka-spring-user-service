@@ -32,7 +32,7 @@ public class Mediator {
             throw new RuntimeException("No handlerFound for request type: " + command.getClass());
         }
 
-        log.info("The handler selected is {}", handler.toString());
+        log.info("The handler selected is {}", handler);
 
         return  handler.handle(command);
 

@@ -1,5 +1,6 @@
 package com.sergioricart.kafka_project.user.infrastructure.api.dto.request;
 
+import com.sergioricart.kafka_project.user.domain.constant.UserConstants;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,15 +11,15 @@ import jakarta.validation.constraints.*;
 @AllArgsConstructor
 public class UserCreatedRequest {
 
-    @NotBlank(message = "El nombre no puede estar vacío")
+    @NotBlank(message = UserConstants.FIRST_NAME_NOT_BLANK)
     String firstName;
 
     String lastName;
 
-    @NotBlank(message = "El email no puede ser nulo")
+    @NotBlank(message = UserConstants.EMAIL_NOT_BLANK)
     String email;
 
-    @NotBlank(message = "La contraseña no puede ser nula")
+    @NotBlank(message = UserConstants.PASSWORD_NOT_BLANK)
     String password;
 
 }

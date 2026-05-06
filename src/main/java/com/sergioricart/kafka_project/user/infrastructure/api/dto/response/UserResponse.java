@@ -20,8 +20,6 @@ public class UserResponse {
 
     Role role;
 
-    String password;
-
     Instant createdAt;
 
     Instant updatedAt;

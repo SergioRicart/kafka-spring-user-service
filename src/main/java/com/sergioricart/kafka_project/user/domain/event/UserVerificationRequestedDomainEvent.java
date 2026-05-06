@@ -15,7 +15,7 @@ public class UserVerificationRequestedDomainEvent {
     private String email;
     private Long timestamp;
 
-    public static UserVerificationRequestedDomainEvent of (UserResponse user) {
+    public static UserVerificationRequestedDomainEvent of(User user) {
         return UserVerificationRequestedDomainEvent.builder()
                 .id(user.getId())
                 .email(user.getEmail())

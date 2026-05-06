@@ -14,7 +14,7 @@ public class UserDeactivatedDomainEvent {
     private String id;
     private Long timestamp;
 
-    public static UserDeactivatedDomainEvent of(UserResponse user){
+    public static UserDeactivatedDomainEvent of(User user){
 
         return  UserDeactivatedDomainEvent.builder()
                 .id(user.getId())
