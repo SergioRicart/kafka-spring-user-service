@@ -6,9 +6,9 @@ spring:
       enabled: false
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/user_db                     #example, not in production
-    username: sricart                                                 #example, not in production
-    password: wW08yIkj76oiO36Mjx7MRb0GV8wLzRk9Fh4dqkzutTWtigt5Nu      #example, not in production
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:user_db}
+    username: ${DB_USER:sricart}
+    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -22,9 +22,9 @@ spring:
 
 app:
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
     group-id: spring-service-group
     topics:
       user: user.events
       user.validation: user.validation.events
-    schema-registry-url: http://localhost:8081
+    schema-registry-url: ${SCHEMA_REGISTRY_URL:http://localhost:8081}

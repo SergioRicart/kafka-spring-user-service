@@ -34,7 +34,7 @@ public class UserController {
 
     private final UserEntityMapper userEntityMapper;
 
-    @Value("${app.kafka.topics.user}")
+    @Value(UserConstants.USER_TOPIC)
     private String topic;
 
     @PostMapping("/create")

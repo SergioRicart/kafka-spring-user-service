@@ -1,6 +1,7 @@
 package com.sergioricart.kafka_project.user.infrastructure.event.producer;
 
 import com.sergioricart.kafka_project.common.infrastructure.event.producer.KafkaProducer;
+import com.sergioricart.kafka_project.user.domain.constant.UserConstants;
 import com.sergioricart.kafka_project.user.domain.event.UserDeactivatedDomainEvent;
 import com.sergioricart.kafka_project.user.domain.event.UserVerificationRequestedDomainEvent;
 import com.sergioricart.kafka_project.user.domain.port.UserEvent;
@@ -19,7 +20,7 @@ public class UserEventProducer implements UserEvent {
 
     private final UserEventMapper userEventMapper;
 
-    @Value("${app.kafka.topics.user.validation}")
+    @Value(UserConstants.USER_VALIDATION_TOPIC)
     private String topic;
 
 

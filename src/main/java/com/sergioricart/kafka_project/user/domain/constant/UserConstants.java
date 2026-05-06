@@ -14,4 +14,8 @@ public class UserConstants {
     public static final String PASSWORD_NOT_BLANK = "Password cannot be blank";
 
 
+    // TOPICS
+    public static final String USER_TOPIC = "${app.kafka.topics.user}";
+    public static  final String USER_VALIDATION_TOPIC = "${app.kafka.topics.user.validation}";
+
 }
