@@ -32,7 +32,7 @@ public class UserCreatedHandler implements CommandHandler<UserCreatedCommand, Vo
                 .lastName(userCommand.getLastName())
                 .email(userCommand.getEmail())
                 .role(userCommand.getRole())
-                .password(RandomStringUtils.randomAlphanumeric(10))
+                .password(userCommand.getPassword())
                 .createdAt(userCommand.getTimestamp())
                 .updatedAt(null)
                 .deletedAt(null)

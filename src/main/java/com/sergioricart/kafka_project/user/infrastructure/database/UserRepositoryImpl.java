@@ -3,12 +3,14 @@ package com.sergioricart.kafka_project.user.infrastructure.database;
 import com.sergioricart.kafka_project.user.domain.entiry.User;
 import com.sergioricart.kafka_project.user.domain.port.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Repository
 @RequiredArgsConstructor
 public class UserRepositoryImpl implements UserRepository {
@@ -20,7 +22,13 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User save(User user) {
         UserEntity userEntity = userEntityMapper.mapToUserEntity(user);
+
+        userEntityList.stream().forEach(entity -> {
+            log.info("Saving User: {}", entity);
+        });
+
         userEntityList.add(userEntity);
+
         return user;
     }
 

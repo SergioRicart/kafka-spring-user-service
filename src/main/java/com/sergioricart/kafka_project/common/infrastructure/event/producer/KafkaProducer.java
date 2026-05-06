@@ -1,5 +1,6 @@
 package com.sergioricart.kafka_project.common.infrastructure.event.producer;
 
+import com.sergioricart.kafka_project.common.application.VoidResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.avro.generic.GenericRecord;
@@ -18,6 +19,7 @@ public class KafkaProducer {
     private final KafkaTemplate<String, GenericRecord> kafkaTemplate;
 
     public void send(String topic, GenericRecord record) {
+
         log.info("Sending message to topic {}. record {}", topic, record);
 
         String uuid = UUID.randomUUID().toString();
