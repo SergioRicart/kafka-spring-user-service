@@ -22,7 +22,7 @@
 		<mapstruct.version>1.6.3</mapstruct.version>
 		<avro.version>1.12.1</avro.version>
 		<avro.plugin.version>1.12.1</avro.plugin.version>
-		<confluent.version>8.2.0</confluent.version>
+		<confluent.version>7.9.0</confluent.version>
 	</properties>
 
 	<repositories>

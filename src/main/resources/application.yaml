@@ -1,6 +1,9 @@
 spring:
   application:
     name: kafka-project
+  devtools:
+    restart:
+      enabled: false
 
   datasource:
     url: jdbc:postgresql://localhost:5432/user_db                     #example, not in production
