@@ -16,8 +16,8 @@ public class User {
     private Role role;
     private Instant timestamp;
     private String password;
-    Instant createdAt;
-    Instant updatedAt;
-    Instant deletedAt;
+    private Instant createdAt;
+    private Instant updatedAt;
+    private Instant deletedAt;
 
 }

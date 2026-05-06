@@ -6,6 +6,7 @@ import com.sergioricart.kafka_project.user.domain.entiry.Role;
 import com.sergioricart.kafka_project.user.domain.entiry.User;
 import com.sergioricart.kafka_project.user.domain.port.UserRepository;
 import com.sergioricart.kafka_project.user.infrastructure.api.dto.request.UserCreatedRequest;
+import com.sergioricart.kafka_project.user.infrastructure.api.dto.response.UserResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -52,8 +53,9 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUser(@PathVariable String id) {
-        Optional<User> optionalUser = userRepository.findById(id);
+    public ResponseEntity<UserResponse> getUser(@PathVariable String id) {
+
+        Optional<UserResponse> optionalUser = userRepository.findById(id);
 
         return optionalUser
                 .map(ResponseEntity::ok)
