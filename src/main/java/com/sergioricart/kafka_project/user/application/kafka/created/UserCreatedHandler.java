@@ -1,9 +1,8 @@
-package com.sergioricart.kafka_project.user.application.created;
+package com.sergioricart.kafka_project.user.application.kafka.created;
 
 import com.sergioricart.kafka_project.common.application.CommandHandler;
 import com.sergioricart.kafka_project.common.application.VoidResponse;
 import com.sergioricart.kafka_project.user.domain.entiry.User;
-import com.sergioricart.kafka_project.user.domain.event.UserVerificationRequestedDomainEvent;
 import com.sergioricart.kafka_project.user.domain.port.UserEvent;
 import com.sergioricart.kafka_project.user.domain.port.UserRepository;
 import lombok.RequiredArgsConstructor;

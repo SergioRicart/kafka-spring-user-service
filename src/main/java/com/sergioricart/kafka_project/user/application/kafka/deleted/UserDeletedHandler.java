@@ -1,14 +1,11 @@
-package com.sergioricart.kafka_project.user.application.deleted;
+package com.sergioricart.kafka_project.user.application.kafka.deleted;
 
 import com.sergioricart.kafka_project.common.application.CommandHandler;
 import com.sergioricart.kafka_project.common.application.VoidResponse;
-import com.sergioricart.kafka_project.user.domain.entiry.User;
-import com.sergioricart.kafka_project.user.domain.event.UserDeactivatedDomainEvent;
 import com.sergioricart.kafka_project.user.domain.port.UserEvent;
 import com.sergioricart.kafka_project.user.domain.port.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -25,8 +22,7 @@ public class UserDeletedHandler implements CommandHandler<UserDeletedCommand, Vo
 
         log.info("UserDeletedHandler received command {}", userCommand);
 
-        userRepository.findById(
-                userCommand.getId()).ifPresent(user -> {
+        userRepository.findById(userCommand.getId()).ifPresent(user -> {
 
                     user.setDeletedAt(userCommand.getTimestamp());
 
@@ -38,6 +34,7 @@ public class UserDeletedHandler implements CommandHandler<UserDeletedCommand, Vo
 
                     userEvent.sendUserDeactivatedEvent(userDeactivatedDomainEvent);*/
         });
+
 
         return new VoidResponse();
 

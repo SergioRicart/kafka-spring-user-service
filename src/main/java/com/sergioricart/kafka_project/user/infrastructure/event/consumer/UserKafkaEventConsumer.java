@@ -20,9 +20,9 @@ import java.util.stream.Collectors;
 @Slf4j
 public class UserKafkaEventConsumer implements Consumer<Message<GenericRecord>> {
 
-    private MessagingUtil messagingUtil;
+    private final MessagingUtil messagingUtil;
 
-    private Map<String, EventSpecificConsummer<SpecificRecord>> eventSpecificConsummerMap;
+    private final Map<String, EventSpecificConsummer<SpecificRecord>> eventSpecificConsummerMap;
 
     public UserKafkaEventConsumer(List<EventSpecificConsummer> specificConsummers, MessagingUtil messagingUtil){
 

@@ -10,6 +10,5 @@ public interface UserRepository {
 
     Optional<User> findById(String id);
 
-    boolean existByEmail(String email);
-
+    void update(User user);
 }

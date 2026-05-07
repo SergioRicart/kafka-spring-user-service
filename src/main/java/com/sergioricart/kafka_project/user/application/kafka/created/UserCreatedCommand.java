@@ -1,4 +1,4 @@
-package com.sergioricart.kafka_project.user.application.deleted;
+package com.sergioricart.kafka_project.user.application.kafka.created;
 
 import com.sergioricart.kafka_project.common.application.Command;
 import com.sergioricart.kafka_project.common.application.VoidResponse;
@@ -8,9 +8,13 @@ import lombok.Data;
 import java.time.Instant;
 
 @Data
-public class UserDeletedCommand implements Command<VoidResponse> {
+public class UserCreatedCommand implements Command<VoidResponse> {
 
-    private String id;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
+    private Role role;
     private Instant timestamp;
 
 }

@@ -36,9 +36,12 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public boolean existByEmail(String email) {
+    public void update(User user) {
 
-        return userRepositoryData.existsByEmail(email);
+        userRepositoryData.save(
+                userEntityMapper.mapToUserEntity(user)
+        );
 
     }
+
 }

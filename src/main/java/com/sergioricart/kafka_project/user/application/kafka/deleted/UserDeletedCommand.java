@@ -1,4 +1,4 @@
-package com.sergioricart.kafka_project.user.application.emailUpdated;
+package com.sergioricart.kafka_project.user.application.kafka.deleted;
 
 import com.sergioricart.kafka_project.common.application.Command;
 import com.sergioricart.kafka_project.common.application.VoidResponse;
@@ -8,10 +8,9 @@ import lombok.Data;
 import java.time.Instant;
 
 @Data
-public class UserEmailUpdatedCommand implements Command<VoidResponse> {
+public class UserDeletedCommand implements Command<VoidResponse> {
 
     private String id;
-    private String email;
     private Instant timestamp;
 
 }

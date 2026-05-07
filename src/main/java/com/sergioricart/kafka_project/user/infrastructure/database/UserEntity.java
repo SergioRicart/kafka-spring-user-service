@@ -33,10 +33,10 @@ public class UserEntity {
 
     private String password;
 
-    Instant createdAt;
+    private Instant createdAt;
 
-    Instant updatedAt;
+    private Instant updatedAt;
 
-    Instant deletedAt;
+    private Instant deletedAt;
 
 }

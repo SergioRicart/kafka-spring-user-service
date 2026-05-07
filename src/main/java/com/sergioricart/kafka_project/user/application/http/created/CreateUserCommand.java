@@ -1,4 +1,4 @@
-package com.sergioricart.kafka_project.user.application.created;
+package com.sergioricart.kafka_project.user.application.http.created;
 
 import com.sergioricart.kafka_project.common.application.Command;
 import com.sergioricart.kafka_project.common.application.VoidResponse;
@@ -8,13 +8,11 @@ import lombok.Data;
 import java.time.Instant;
 
 @Data
-public class UserCreatedCommand implements Command<VoidResponse> {
+public class CreateUserCommand implements Command<VoidResponse> {
 
     private String firstName;
     private String lastName;
     private String email;
     private String password;
-    private Role role;
-    private Instant timestamp;
 
 }
