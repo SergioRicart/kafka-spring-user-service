@@ -11,7 +11,7 @@
 	</parent>
 
 	<groupId>com.sergioricart</groupId>
-	<artifactId>kafka-project</artifactId>
+	<artifactId>kafkaSpringUserService</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>kafka-project</name>
 	<description>Kafka project with Avro and Schema Registry</description>

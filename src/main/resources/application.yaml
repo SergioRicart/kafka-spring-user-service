@@ -26,5 +26,4 @@ app:
     group-id: spring-service-group
     topics:
       user: user.events
-      user.validation: user.validation.events
     schema-registry-url: ${SCHEMA_REGISTRY_URL:http://localhost:8081}
