@@ -2,7 +2,9 @@ package com.sergioricart.kafka_project.user.infrastructure.event.producer;
 
 import com.sergioricart.kafka_project.common.infrastructure.event.producer.KafkaProducer;
 import com.sergioricart.kafka_project.user.domain.constant.UserConstants;
+import com.sergioricart.kafka_project.user.domain.event.UserCreatedDomainEvent;
 import com.sergioricart.kafka_project.user.domain.event.UserDeactivatedDomainEvent;
+import com.sergioricart.kafka_project.user.domain.event.UserDeletedDomainEvent;
 import com.sergioricart.kafka_project.user.domain.event.UserVerificationRequestedDomainEvent;
 import com.sergioricart.kafka_project.user.domain.port.UserEvent;
 import com.sergioricart.kafka_project.user.infrastructure.event.mapper.UserEventMapper;
@@ -23,6 +25,23 @@ public class UserEventProducer implements UserEvent {
     @Value(UserConstants.USER_VALIDATION_TOPIC)
     private String topic;
 
+    @Override
+    public void sendUserCreatedEvent(UserCreatedDomainEvent event) {
+
+        log.info("UserEventProducer sending user created event {}", event);
+
+        kafkaProducer.send(topic, userEventMapper.mapToUserCreatedEvent(event));
+
+    }
+
+    @Override
+    public void sendUserDeletedEvent(UserDeletedDomainEvent event) {
+
+        log.info("UserEventProducer sending user deleted event {}", event);
+
+        kafkaProducer.send(topic, userEventMapper.mapToUserDeletedEvent(event));
+
+    }
 
     @Override
     public void sendUserDeactivatedEvent(UserDeactivatedDomainEvent event) {
@@ -30,6 +49,7 @@ public class UserEventProducer implements UserEvent {
         log.info("UserEventProducer sending user deactivated event {}", event);
 
         kafkaProducer.send(topic, userEventMapper.mapToUserDeactivatedEvent(event));
+
     }
 
     @Override
@@ -40,4 +60,5 @@ public class UserEventProducer implements UserEvent {
         kafkaProducer.send(topic, userEventMapper.mapToUserVerificationRequestedEvent(event));
 
     }
+
 }

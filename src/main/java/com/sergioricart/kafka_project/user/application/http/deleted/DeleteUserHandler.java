@@ -2,10 +2,13 @@ package com.sergioricart.kafka_project.user.application.http.deleted;
 
 import com.sergioricart.kafka_project.common.application.CommandHandler;
 import com.sergioricart.kafka_project.common.application.VoidResponse;
+import com.sergioricart.kafka_project.user.domain.event.UserDeletedDomainEvent;
+import com.sergioricart.kafka_project.user.domain.port.UserEvent;
 import com.sergioricart.kafka_project.user.domain.port.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 
@@ -16,19 +19,19 @@ public class DeleteUserHandler implements CommandHandler<DeleteUserCommand, Void
 
     private final UserRepository userRepository;
 
+    private final UserEvent userEvent;
+
     @Override
+    @Transactional
     public VoidResponse handle(DeleteUserCommand userCommand) {
 
-        log.info("UserDeletedHandler received command {}", userCommand);
+        log.info("DeleteUserHandler received command {}", userCommand);
 
         userRepository.findById(userCommand.getId()).ifPresent(user -> {
-
             user.setDeletedAt(Instant.now());
-
             userRepository.save(user);
-
+            userEvent.sendUserDeletedEvent(UserDeletedDomainEvent.of(user));
         });
-
 
         return new VoidResponse();
 
@@ -38,6 +41,5 @@ public class DeleteUserHandler implements CommandHandler<DeleteUserCommand, Void
     public Class<DeleteUserCommand> getCommandType() {
         return DeleteUserCommand.class;
     }
-
 
 }

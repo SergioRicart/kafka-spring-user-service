@@ -5,7 +5,9 @@ import com.sergioricart.kafka_project.common.infrastructure.event.util.MapperUti
 import com.sergioricart.kafka_project.user.application.kafka.created.UserCreatedCommand;
 import com.sergioricart.kafka_project.user.application.kafka.deleted.UserDeletedCommand;
 import com.sergioricart.kafka_project.user.application.kafka.updated.UserUpdatedCommand;
+import com.sergioricart.kafka_project.user.domain.event.UserCreatedDomainEvent;
 import com.sergioricart.kafka_project.user.domain.event.UserDeactivatedDomainEvent;
+import com.sergioricart.kafka_project.user.domain.event.UserDeletedDomainEvent;
 import com.sergioricart.kafka_project.user.domain.event.UserVerificationRequestedDomainEvent;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
@@ -19,6 +21,10 @@ public interface UserEventMapper extends MapperUtils {
     UserUpdatedCommand mapToUserUpdatedCommand(UserUpdatedEvent event);
 
     UserDeletedCommand mapToUserDeletedCommand(UserDeletedEvent event);
+
+    UserCreatedEvent mapToUserCreatedEvent(UserCreatedDomainEvent event);
+
+    UserDeletedEvent mapToUserDeletedEvent(UserDeletedDomainEvent event);
 
     UserDeactivatedEvent mapToUserDeactivatedEvent(UserDeactivatedDomainEvent event);
 
