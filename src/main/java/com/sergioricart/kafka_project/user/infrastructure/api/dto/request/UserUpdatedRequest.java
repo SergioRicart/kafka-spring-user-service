@@ -6,23 +6,22 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
-import java.util.Optional;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserUpdatedRequest {
 
-     Optional<String> firstName;
+     String firstName;
 
-     Optional<String> lastName;
+     String lastName;
 
-     Optional<String> email;
+     String email;
 
-     Optional<Role> role;
+     Role role;
 
-     Optional<Instant> timestamp;
+     Instant timestamp;
 
-     Optional<String> password;
+     String password;
 
 }

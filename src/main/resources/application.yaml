@@ -25,6 +25,5 @@ app:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
     group-id: spring-service-group
     topics:
-      user.in: user.in.events
-      user.out: user.out.events
+      user: user.events
     schema-registry-url: ${SCHEMA_REGISTRY_URL:http://localhost:8081}

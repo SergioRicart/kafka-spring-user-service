@@ -1,8 +1,10 @@
-package com.sergioricart.kafka_project.user.application.http.deleted;
+package com.sergioricart.kafka_project.user.application.http.delete;
 
 import com.sergioricart.kafka_project.common.application.CommandHandler;
 import com.sergioricart.kafka_project.common.application.VoidResponse;
+import com.sergioricart.kafka_project.user.domain.constant.UserConstants;
 import com.sergioricart.kafka_project.user.domain.event.UserDeletedDomainEvent;
+import com.sergioricart.kafka_project.user.domain.exception.UserNotFoundException;
 import com.sergioricart.kafka_project.user.domain.port.UserEvent;
 import com.sergioricart.kafka_project.user.domain.port.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,10 +29,16 @@ public class DeleteUserHandler implements CommandHandler<DeleteUserCommand, Void
 
         log.info("DeleteUserHandler received command {}", userCommand);
 
-        userRepository.findById(userCommand.getId()).ifPresent(user -> {
+        userRepository.findById(userCommand.getId()).ifPresentOrElse(user -> {
+
             user.setDeletedAt(Instant.now());
+
             userRepository.save(user);
+
             userEvent.sendUserDeletedEvent(UserDeletedDomainEvent.of(user));
+
+        }, () -> {
+            throw new UserNotFoundException(UserConstants.USER_NOT_FOUND_MESSAGE);
         });
 
         return new VoidResponse();

@@ -95,7 +95,7 @@ public class UserKafkaEventConsumer implements Consumer<Message<GenericRecord>> 
 
         }else  {
             log.warn("No consumer for schema {}", schemaFullName);
-        }
+        }ñ
 
     }
 

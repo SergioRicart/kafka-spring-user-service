@@ -4,6 +4,7 @@ import com.sergioricart.kafka_project.common.infrastructure.event.producer.Kafka
 import com.sergioricart.kafka_project.user.domain.constant.UserConstants;
 import com.sergioricart.kafka_project.user.domain.event.UserCreatedDomainEvent;
 import com.sergioricart.kafka_project.user.domain.event.UserDeletedDomainEvent;
+import com.sergioricart.kafka_project.user.domain.event.UserUpdatedDomainEvent;
 import com.sergioricart.kafka_project.user.domain.port.UserEvent;
 import com.sergioricart.kafka_project.user.infrastructure.event.mapper.UserEventMapper;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +39,15 @@ public class UserEventProducer implements UserEvent {
         log.info("UserEventProducer sending user deleted event {}", event);
 
         kafkaProducer.send(topic, userEventMapper.mapToUserDeletedEvent(event));
+
+    }
+
+    @Override
+    public void sendUserUpdatedEvent(UserUpdatedDomainEvent event) {
+
+        log.info("UserEventProducer sending user updated event {}", event);
+
+        kafkaProducer.send(topic, userEventMapper.mapToUserUpdatedEvent(event));
 
     }
 

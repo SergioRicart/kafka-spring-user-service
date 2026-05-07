@@ -2,8 +2,10 @@ package com.sergioricart.kafka_project.user.infrastructure.api.contoller;
 
 import com.sergioricart.kafka_project.common.application.Mediator;
 import com.sergioricart.kafka_project.user.application.http.created.CreateUserCommand;
-import com.sergioricart.kafka_project.user.application.http.deleted.DeleteUserCommand;
+import com.sergioricart.kafka_project.user.application.http.delete.DeleteUserCommand;
+import com.sergioricart.kafka_project.user.application.http.update.UpdateUserCommand;
 import com.sergioricart.kafka_project.user.infrastructure.api.dto.request.UserCreatedRequest;
+import com.sergioricart.kafka_project.user.infrastructure.api.dto.request.UserUpdatedRequest;
 import com.sergioricart.kafka_project.user.infrastructure.api.mapper.UserApiMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -44,6 +46,19 @@ public class UserController {
         mediator.dispatch(command);
 
         return ResponseEntity.noContent().build();
+
+    }
+
+    @PatchMapping("/update/{id}")
+    public  ResponseEntity<?> updateUser(@PathVariable String id, @Valid @RequestBody UserUpdatedRequest userDto) {
+
+        UpdateUserCommand command = apiMapper.mapToUpdateUserCommand(userDto);
+
+        command.setId(id);
+
+        mediator.dispatch(command);
+
+        return  ResponseEntity.noContent().build();
 
     }
 
