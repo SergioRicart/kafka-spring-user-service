@@ -1,3 +1,29 @@
+/**
+ * Router de eventos Kafka entrantes.
+ * Escucha el topic configurado en "app.kafka.topics.user" y despacha
+ * cada evento al SpecificConsumer correspondiente según su schema Avro.
+ *
+ * IMPORTANTE: Este consumer solo tiene sentido si un servicio EXTERNO
+ * publica en ese topic. Este servicio no debe escuchar su propio topic
+ * de salida. Si se necesita reaccionar a eventos de otro servicio
+ * (ej: order-service, auth-service), cambiar el topic al de salida
+ * de ese servicio (ej: "order.out", "auth.out").
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 package com.sergioricart.kafka_project.user.infrastructure.event.consumer;
 
 import com.sergioricart.kafka_project.common.infrastructure.event.consumer.EventSpecificConsummer;
@@ -16,6 +42,12 @@ import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
+
+// ESTE CONSUMER NO TIENE SENTIDO PORQUE ESTA ESCUCHANDO SU PROPIO TOPIC DE ENTRADA CUANDO LO QUE HAY QUE HACER ES ESCUCHAR LOS TOPICS
+// ESTE CONSUMER NO TIENE SENTIDO PORQUE ESTA ESCUCHANDO SU PROPIO TOPIC DE ENTRADA CUANDO LO QUE HAY QUE HACER ES ESCUCHAR LOS TOPICS
+// ESTE CONSUMER NO TIENE SENTIDO PORQUE ESTA ESCUCHANDO SU PROPIO TOPIC DE ENTRADA CUANDO LO QUE HAY QUE HACER ES ESCUCHAR LOS TOPICS
+// ESTE CONSUMER NO TIENE SENTIDO PORQUE ESTA ESCUCHANDO SU PROPIO TOPIC DE ENTRADA CUANDO LO QUE HAY QUE HACER ES ESCUCHAR LOS TOPICS
+// ESTE CONSUMER NO TIENE SENTIDO PORQUE ESTA ESCUCHANDO SU PROPIO TOPIC DE ENTRADA CUANDO LO QUE HAY QUE HACER ES ESCUCHAR LOS TOPICS
 @Component
 @Slf4j
 public class UserKafkaEventConsumer implements Consumer<Message<GenericRecord>> {
@@ -38,7 +70,7 @@ public class UserKafkaEventConsumer implements Consumer<Message<GenericRecord>> 
     };
 
     @SneakyThrows
-    @KafkaListener(topics = UserConstants.USER_TOPIC, groupId = "${app.kafka.group-id}", containerFactory = "kafkaListenerContainerFactory")
+    @KafkaListener(topics = UserConstants.USER_TOPIC_IN, groupId = "${app.kafka.group-id}", containerFactory = "kafkaListenerContainerFactory")
     @Override
     public void accept(Message<GenericRecord> genericRecordMessage) {
 
@@ -68,3 +100,4 @@ public class UserKafkaEventConsumer implements Consumer<Message<GenericRecord>> 
     }
 
 }
+*/

@@ -1,3 +1,12 @@
+/**
+ * Handler que procesa eventos de creación/borrado de usuarios llegados
+ * por Kafka desde un servicio externo.
+ * No confundir con CreateUserHandler (http), que procesa peticiones HTTP
+ * directas y además publica el evento de salida a "user.out".
+ */
+
+
+/*
 package com.sergioricart.kafka_project.user.application.kafka.updated;
 
 import com.sergioricart.kafka_project.common.application.CommandHandler;
@@ -48,3 +57,4 @@ public class UserUpdatedHandler implements CommandHandler<UserUpdatedCommand, Vo
 
 
 }
+*/
