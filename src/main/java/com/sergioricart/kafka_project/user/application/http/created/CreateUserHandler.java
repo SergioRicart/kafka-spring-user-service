@@ -2,10 +2,8 @@ package com.sergioricart.kafka_project.user.application.http.created;
 
 import com.sergioricart.kafka_project.common.application.CommandHandler;
 import com.sergioricart.kafka_project.common.application.VoidResponse;
-import com.sergioricart.kafka_project.user.application.kafka.created.UserCreatedCommand;
 import com.sergioricart.kafka_project.user.domain.entiry.Role;
 import com.sergioricart.kafka_project.user.domain.entiry.User;
-import com.sergioricart.kafka_project.user.domain.port.UserEvent;
 import com.sergioricart.kafka_project.user.domain.port.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,12 +18,10 @@ public class CreateUserHandler implements CommandHandler<CreateUserCommand, Void
 
     private final UserRepository userRepository;
 
-    private final UserEvent userEvent;
-
     @Override
     public VoidResponse handle(CreateUserCommand userCommand) {
 
-        log.info("UserCreatedHandler received command {}", userCommand);
+        log.info("CreateUserHandler received command {}", userCommand);
 
         User user = User.builder()
                 .firstName(userCommand.getFirstName())
@@ -46,6 +42,5 @@ public class CreateUserHandler implements CommandHandler<CreateUserCommand, Void
     public Class<CreateUserCommand> getCommandType() {
         return CreateUserCommand.class;
     }
-
 
 }
