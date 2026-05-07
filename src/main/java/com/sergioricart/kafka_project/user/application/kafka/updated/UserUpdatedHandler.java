@@ -35,7 +35,7 @@ public class UserUpdatedHandler implements CommandHandler<UserUpdatedCommand, Vo
                 .deletedAt(null)
                 .build();
 
-        userRepository.update(user);
+        userRepository.save(user);
 
         return new VoidResponse();
 

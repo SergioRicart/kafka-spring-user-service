@@ -20,10 +20,7 @@ public class UserRepositoryImpl implements UserRepository {
     public void save(User user) {
 
         UserEntity userEntity = userEntityMapper.mapToUserEntity(user);
-
         userRepositoryData.save(userEntity);
-
-        userEntityMapper.mapToUser(userEntity);
 
     }
 
@@ -32,15 +29,6 @@ public class UserRepositoryImpl implements UserRepository {
 
         return userRepositoryData.findById(id)
                 .map(userEntityMapper::mapToUser);
-
-    }
-
-    @Override
-    public void update(User user) {
-
-        userRepositoryData.save(
-                userEntityMapper.mapToUserEntity(user)
-        );
 
     }
 

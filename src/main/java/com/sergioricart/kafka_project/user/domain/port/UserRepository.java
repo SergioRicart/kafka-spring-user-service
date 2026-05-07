@@ -10,5 +10,4 @@ public interface UserRepository {
 
     Optional<User> findById(String id);
 
-    void update(User user);
 }
