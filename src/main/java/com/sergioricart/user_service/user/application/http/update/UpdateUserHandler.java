@@ -10,6 +10,7 @@ import com.sergioricart.user_service.user.domain.port.UserEvent;
 import com.sergioricart.user_service.user.domain.port.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +24,8 @@ public class UpdateUserHandler implements CommandHandler<UpdateUserCommand, Void
     private final UserRepository userRepository;
 
     private final UserEvent userEvent;
+
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
@@ -40,7 +43,7 @@ public class UpdateUserHandler implements CommandHandler<UpdateUserCommand, Void
         if (userCommand.getLastName() != null) userEntity.setLastName(userCommand.getLastName());
         if (userCommand.getEmail() != null) userEntity.setEmail(userCommand.getEmail());
         if (userCommand.getRole() != null) userEntity.setRole(userCommand.getRole());
-        if (userCommand.getPassword() != null) userEntity.setPassword(userCommand.getPassword());
+        if (userCommand.getPassword() != null) userEntity.setPassword(passwordEncoder.encode(userCommand.getPassword()));
 
         userEntity.setUpdatedAt(Instant.now());
 

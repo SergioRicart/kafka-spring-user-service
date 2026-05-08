@@ -9,6 +9,7 @@ import com.sergioricart.user_service.user.domain.port.UserEvent;
 import com.sergioricart.user_service.user.domain.port.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +24,8 @@ public class CreateUserHandler implements CommandHandler<CreateUserCommand, Void
 
     private final UserEvent userEvent;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Override
     @Transactional
     public VoidResponse handle(CreateUserCommand userCommand) {
@@ -34,7 +37,7 @@ public class CreateUserHandler implements CommandHandler<CreateUserCommand, Void
                 .lastName(userCommand.getLastName())
                 .email(userCommand.getEmail())
                 .role(Role.USER)
-                .password(userCommand.getPassword())
+                .password(passwordEncoder.encode(userCommand.getPassword()))
                 .createdAt(Instant.now())
                 .build();
 
