@@ -38,3 +38,7 @@ build/
 
 
 .env
+
+### CLAUDE ###
+docs/
+CLAUDE.md
