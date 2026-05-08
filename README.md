@@ -1,4 +1,4 @@
-# kafka-project
+# user_service
 
 A production-ready event-driven microservice built with **Spring Boot**, **Apache Kafka**, and **Apache Avro** with Schema Registry. Designed as a foundational template for scalable, schema-enforced, event-sourced architectures in a microservice ecosystem.
 

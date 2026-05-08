@@ -11,11 +11,11 @@
 	</parent>
 
 	<groupId>com.sergioricart</groupId>
-	<artifactId>kafka-project</artifactId>
+	<artifactId>user_service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>kafka-project</name>
+	<name>user_service</name>
 	<description>Kafka project with Avro and Schema Registry</description>
-	<url>https://github.com/sergioricart/kafka-project</url>
+	<url>https://github.com/SergioRicart/kafka-spring-user-service</url>
 
 	<properties>
 		<java.version>21</java.version>
