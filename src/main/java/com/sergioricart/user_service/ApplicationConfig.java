@@ -1,4 +1,4 @@
-package com.sergioricart.user_service.common.infrastructure.config;
+package com.sergioricart.user_service;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

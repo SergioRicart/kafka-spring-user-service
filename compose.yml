@@ -131,3 +131,6 @@ volumes:
 networks:
   kafka:
     driver: bridge
+
+server:
+  port: ${SERVER_PORT:8080}

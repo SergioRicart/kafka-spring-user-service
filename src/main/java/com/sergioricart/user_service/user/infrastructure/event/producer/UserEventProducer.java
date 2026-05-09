@@ -1,6 +1,6 @@
 package com.sergioricart.user_service.user.infrastructure.event.producer;
 
-import com.sergioricart.user_service.common.infrastructure.event.producer.KafkaProducer;
+import com.sergioricart.commons.infrastructure.event.producer.KafkaProducer;
 import com.sergioricart.user_service.user.domain.constant.UserConstants;
 import com.sergioricart.user_service.user.domain.event.UserCreatedDomainEvent;
 import com.sergioricart.user_service.user.domain.event.UserDeletedDomainEvent;

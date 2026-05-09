@@ -12,7 +12,7 @@
 
 	<groupId>com.sergioricart</groupId>
 	<artifactId>user_service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>user_service</name>
 	<description>Kafka project with Avro and Schema Registry</description>
 	<url>https://github.com/SergioRicart/kafka-spring-user-service</url>
@@ -30,9 +30,20 @@
 			<id>confluent</id>
 			<url>https://packages.confluent.io/maven/</url>
 		</repository>
+		<repository>
+			<id>github</id>
+			<name>GitHub Packages</name>
+			<url>https://maven.pkg.github.com/SergioRicart/microservice-commons</url>
+		</repository>
 	</repositories>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>com.sergioricart</groupId>
+			<artifactId>microservice-commons</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

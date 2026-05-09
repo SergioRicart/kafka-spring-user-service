@@ -16,8 +16,8 @@
 /*
 package com.sergioricart.user_service.user.application.kafka.created;
 
-import com.sergioricart.user_service.common.application.Command;
-import com.sergioricart.user_service.common.application.VoidResponse;
+import com.sergioricart.commons.application.Command;
+import com.sergioricart.commons.application.VoidResponse;
 import com.sergioricart.user_service.user.domain.entiry.Role;
 import lombok.Data;
 
