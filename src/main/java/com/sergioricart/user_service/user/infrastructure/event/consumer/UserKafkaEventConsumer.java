@@ -26,8 +26,8 @@
 /*
 package com.sergioricart.user_service.user.infrastructure.event.consumer;
 
-import com.sergioricart.user_service.common.infrastructure.event.consumer.EventSpecificConsummer;
-import com.sergioricart.user_service.common.infrastructure.event.util.MessagingUtil;
+import com.sergioricart.commons.infrastructure.event.consumer.EventSpecificConsumer;
+import com.sergioricart.commons.infrastructure.event.util.MessagingUtil;
 import com.sergioricart.user_service.user.domain.constant.UserConstants;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -54,13 +54,13 @@ public class UserKafkaEventConsumer implements Consumer<Message<GenericRecord>> 
 
     private final MessagingUtil messagingUtil;
 
-    private final Map<String, EventSpecificConsummer<SpecificRecord>> eventSpecificConsummerMap;
+    private final Map<String, EventSpecificConsumer<SpecificRecord>> eventSpecificConsummerMap;
 
-    public UserKafkaEventConsumer(List<EventSpecificConsummer> specificConsummers, MessagingUtil messagingUtil){
+    public UserKafkaEventConsumer(List<EventSpecificConsumer> specificConsummers, MessagingUtil messagingUtil){
 
         eventSpecificConsummerMap = specificConsummers.stream().collect(
                 Collectors.toMap(
-                        EventSpecificConsummer::getSchema,
+                        EventSpecificConsumer::getSchema,
                         consumer -> consumer
                 )
         );
@@ -80,7 +80,7 @@ public class UserKafkaEventConsumer implements Consumer<Message<GenericRecord>> 
 
         String schemaFullName = specificRecord.getClass().getTypeName();
 
-        EventSpecificConsummer<SpecificRecord> specificConsummer = eventSpecificConsummerMap.get(schemaFullName);
+        EventSpecificConsumer<SpecificRecord> specificConsummer = eventSpecificConsummerMap.get(schemaFullName);
 
         if (specificConsummer != null) {
 

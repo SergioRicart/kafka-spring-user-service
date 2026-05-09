@@ -1,6 +1,6 @@
 package com.sergioricart.user_service.user.infrastructure.api.contoller;
 
-import com.sergioricart.user_service.common.application.Mediator;
+import com.sergioricart.commons.application.Mediator;
 import com.sergioricart.user_service.user.application.http.created.CreateUserCommand;
 import com.sergioricart.user_service.user.application.http.delete.DeleteUserCommand;
 import com.sergioricart.user_service.user.application.http.update.UpdateUserCommand;

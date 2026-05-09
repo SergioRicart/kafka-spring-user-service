@@ -1,8 +1,8 @@
 package com.sergioricart.user_service.user.infrastructure.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sergioricart.user_service.common.application.Mediator;
-import com.sergioricart.user_service.common.application.VoidResponse;
+import com.sergioricart.commons.application.Mediator;
+import com.sergioricart.commons.application.VoidResponse;
 import com.sergioricart.user_service.fixtures.UserFixture;
 import com.sergioricart.user_service.user.application.http.delete.DeleteUserCommand;
 import com.sergioricart.user_service.user.application.http.update.UpdateUserCommand;

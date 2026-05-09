@@ -12,8 +12,8 @@
 /*
 package com.sergioricart.user_service.user.application.kafka.created;
 
-import com.sergioricart.user_service.common.application.CommandHandler;
-import com.sergioricart.user_service.common.application.VoidResponse;
+import com.sergioricart.commons.application.CommandHandler;
+import com.sergioricart.commons.application.VoidResponse;
 import com.sergioricart.user_service.user.domain.entiry.User;
 import com.sergioricart.user_service.user.domain.port.UserEvent;
 import com.sergioricart.user_service.user.domain.port.UserRepository;
