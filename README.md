@@ -3,17 +3,20 @@
 Microservicio event-driven listo para producción construido con **Spring Boot**, **Apache Kafka** y **Apache Avro** con Schema Registry. Diseñado como plantilla base para arquitecturas escalables con validación de esquemas en un ecosistema de microservicios.
 
 ![CI](https://github.com/SergioRicart/kafkaSpringUserService/actions/workflows/ci.yml/badge.svg)
+![CD](https://github.com/SergioRicart/kafkaSpringUserService/actions/workflows/cd.yml/badge.svg)
 
 ---
 
 ## Tabla de contenidos
 
 - [Visión general](#visión-general)
+- [Estructura del proyecto](#estructura-del-proyecto)
 - [Arquitectura](#arquitectura)
 - [Tech Stack](#tech-stack)
 - [Primeros pasos](#primeros-pasos)
 - [API REST](#api-rest)
 - [Eventos Kafka](#eventos-kafka)
+- [Usar user-service-events como dependencia](#usar-user-service-events-como-dependencia)
 - [Configuración](#configuración)
 - [CI/CD](#cicd)
 - [Tests](#tests)
@@ -28,7 +31,30 @@ Este servicio gestiona el ciclo de vida de usuarios a través de una arquitectur
 Principios de diseño:
 - **Schema-first**: todos los mensajes Kafka se validan contra schemas Avro registrados en Confluent Schema Registry
 - **Arquitectura limpia**: la lógica de dominio está completamente desacoplada de la infraestructura
-- **Extensible**: construido para escalar a un ecosistema completo de microservicios con múltiples bounded contexts
+- **Contrato publicado**: los schemas Avro se publican como módulo independiente (`user-service-events`) en GitHub Packages para que otros servicios los consuman con tipado fuerte en compilación
+
+---
+
+## Estructura del proyecto
+
+El repositorio es un proyecto **Maven multi-módulo** con dos módulos:
+
+```
+kafka-spring-user-service/
+  pom.xml                        — POM padre: agrupa módulos, versiones y GitHub Packages
+  user-service-events/
+    pom.xml                      — JAR ligero publicado en GitHub Packages
+    src/main/resources/schemas/  — schemas .avsc (fuente de verdad de los eventos)
+  user-service-core/
+    pom.xml                      — Aplicación Spring Boot (no se publica)
+    src/main/java/               — código de negocio, infraestructura y tests
+    .env.example                 — plantilla de variables de entorno
+```
+
+| Módulo | Rol | Se publica |
+|---|---|---|
+| `user-service-events` | Clases Avro generadas desde `.avsc`, consumibles como dependencia Maven | ✅ GitHub Packages |
+| `user-service-core` | Servicio Spring Boot completo | ❌ |
 
 ---
 
@@ -70,17 +96,17 @@ El `Mediator` descubre automáticamente todos los beans `CommandHandler` en el c
 
 ## Tech Stack
 
-| Componente          | Tecnología                          |
-|---------------------|-------------------------------------|
-| Framework           | Spring Boot 4.x                     |
-| Lenguaje            | Java 21                             |
-| Mensajería          | Apache Kafka (Spring Kafka)         |
-| Serialización       | Apache Avro + Confluent Schema Registry |
-| Base de datos       | PostgreSQL 16 + Spring Data JPA     |
-| Mapping             | MapStruct + Lombok                  |
-| Build               | Maven (Maven Wrapper incluido)      |
-| Infraestructura local | Docker Compose                    |
-| CI/CD               | GitHub Actions                      |
+| Componente | Tecnología |
+|---|---|
+| Framework | Spring Boot 3.x |
+| Lenguaje | Java 21 |
+| Mensajería | Apache Kafka (Spring Kafka) |
+| Serialización | Apache Avro + Confluent Schema Registry |
+| Base de datos | PostgreSQL 16 + Spring Data JPA |
+| Mapping | MapStruct + Lombok |
+| Build | Maven multi-módulo (Maven Wrapper incluido) |
+| Infraestructura local | Docker Compose |
+| CI/CD | GitHub Actions + GitHub Packages |
 
 ---
 
@@ -95,10 +121,10 @@ El `Mediator` descubre automáticamente todos los beans `CommandHandler` en el c
 ### 1. Configurar variables de entorno
 
 ```bash
-cp .env.example .env
+cp user-service-core/.env.example user-service-core/.env
 ```
 
-Edita `.env` y rellena los valores, especialmente `DB_PASSWORD`.
+Edita `user-service-core/.env` y rellena los valores, especialmente `DB_PASSWORD`.
 
 ### 2. Levantar infraestructura local
 
@@ -108,11 +134,11 @@ docker compose up -d
 
 Levanta: Zookeeper, Kafka Broker, Schema Registry, Confluent Control Center y PostgreSQL.
 
-| Servicio              | URL                          |
-|-----------------------|------------------------------|
-| Confluent Control Center | http://localhost:9021      |
-| Schema Registry       | http://localhost:8081        |
-| PostgreSQL            | localhost:5432               |
+| Servicio | URL |
+|---|---|
+| Confluent Control Center | http://localhost:9021 |
+| Schema Registry | http://localhost:8081 |
+| PostgreSQL | localhost:5432 |
 
 ### 3. Compilar el proyecto
 
@@ -120,12 +146,12 @@ Levanta: Zookeeper, Kafka Broker, Schema Registry, Confluent Control Center y Po
 ./mvnw clean install
 ```
 
-> Las clases Java de Avro se auto-generan desde los `.avsc` durante la compilación.
+> Las clases Java de Avro se auto-generan en `user-service-events` desde los `.avsc` durante la compilación y quedan disponibles para `user-service-core` vía dependencia Maven.
 
 ### 4. Ejecutar la aplicación
 
 ```bash
-./mvnw spring-boot:run
+./mvnw spring-boot:run -pl user-service-core
 ```
 
 La API estará disponible en `http://localhost:8080`.
@@ -184,45 +210,78 @@ Respuesta: `204 No Content`
 
 Topic principal: **`user.events`**
 
-Todos los eventos se serializan en Avro y se registran en Schema Registry. Los schemas fuente están en `src/main/resources/schemas/user/`.
+Todos los eventos se serializan en Avro y se registran en Schema Registry. Los schemas fuente están en `user-service-events/src/main/resources/schemas/user/`.
 
-| Evento              | Campos                                                          |
-|---------------------|-----------------------------------------------------------------|
-| `UserCreatedEvent`  | `firstName`, `lastName`, `email`, `role`, `password`, `timestamp` |
-| `UserUpdatedEvent`  | `id`, `firstName`, `lastName`, `email`, `role`, `password`, `timestamp` |
-| `UserDeletedEvent`  | `id`, `timestamp`                                               |
+| Evento | Campos |
+|---|---|
+| `UserCreatedEvent` | `firstName`, `lastName`, `email`, `role`, `password`, `timestamp` |
+| `UserUpdatedEvent` | `id`, `firstName`, `lastName`, `email`, `role`, `password`, `timestamp` |
+| `UserDeletedEvent` | `id`, `timestamp` |
 
-La especificación AsyncAPI completa está en `src/main/resources/asyncapi.yml`.
+La especificación AsyncAPI completa está en `user-service-core/src/main/resources/asyncapi.yml`.
+
+---
+
+## Usar user-service-events como dependencia
+
+Otros microservicios pueden consumir los eventos de este servicio con tipado fuerte en compilación añadiendo `user-service-events` como dependencia Maven. No arrastra Spring Boot, JPA ni ninguna dependencia de la aplicación.
+
+```xml
+<!-- Repositorio -->
+<repository>
+    <id>github</id>
+    <url>https://maven.pkg.github.com/SergioRicart/kafka-spring-user-service</url>
+</repository>
+
+<!-- Dependencia -->
+<dependency>
+    <groupId>com.sergioricart</groupId>
+    <artifactId>user-service-events</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
+Requiere un token de GitHub con permiso `read:packages` configurado en el `settings.xml` de Maven o como variable de entorno en el CI/CD del servicio consumidor.
 
 ---
 
 ## Configuración
 
-Las variables de entorno se cargan desde `.env` (vía `spring-dotenv`). Valores configurables:
+Las variables de entorno se cargan desde `user-service-core/.env` (vía `spring-dotenv`). Valores configurables:
 
-| Variable                 | Por defecto             | Descripción                        |
-|--------------------------|-------------------------|------------------------------------|
-| `DB_HOST`                | `localhost`             | Host de PostgreSQL                 |
-| `DB_PORT`                | `5432`                  | Puerto de PostgreSQL               |
-| `DB_NAME`                | `user_db`               | Nombre de la base de datos         |
-| `DB_USER`                | `sricart`               | Usuario de la base de datos        |
-| `DB_PASSWORD`            | —                       | Contraseña (obligatoria)           |
-| `KAFKA_BOOTSTRAP_SERVERS`| `localhost:9092`        | Dirección del broker Kafka         |
-| `SCHEMA_REGISTRY_URL`    | `http://localhost:8081` | URL del Schema Registry            |
+| Variable | Por defecto | Descripción |
+|---|---|---|
+| `DB_HOST` | `localhost` | Host de PostgreSQL |
+| `DB_PORT` | `5432` | Puerto de PostgreSQL |
+| `DB_NAME` | `user_db` | Nombre de la base de datos |
+| `DB_USER` | `sricart` | Usuario de la base de datos |
+| `DB_PASSWORD` | — | Contraseña (obligatoria) |
+| `KAFKA_BOOTSTRAP_SERVERS` | `localhost:9092` | Dirección del broker Kafka |
+| `SCHEMA_REGISTRY_URL` | `http://localhost:8081` | URL del Schema Registry |
 
 ---
 
 ## CI/CD
 
-El pipeline de GitHub Actions se ejecuta automáticamente en cada **Pull Request hacia `main`**.
+### CI — Tests (Pull Requests a `main`)
 
-**Pasos:**
+En cada PR se ejecuta automáticamente:
+
 1. Checkout del código
 2. Setup de Java 21 (Temurin) con caché de Maven
 3. Levanta un servicio PostgreSQL real (Docker service)
-4. Ejecuta `./mvnw clean test`
+4. Ejecuta `./mvnw clean test -pl user-service-events,user-service-core --also-make`
 
 El pipeline **no mockea la base de datos** — los tests corren contra PostgreSQL real para garantizar que las migraciones y consultas funcionen en producción.
+
+### CD — Publicación (merge a `main`)
+
+Al hacer merge a `main` se publica automáticamente en GitHub Packages:
+
+- `user-service-events-{version}.jar` — el contrato de eventos consumible por otros servicios
+- `kafka-spring-user-service-{version}.pom` — el POM padre necesario para resolver dependencias
+
+`user-service-core` **no se publica** (`maven.deploy.skip=true`).
 
 ---
 
@@ -230,19 +289,19 @@ El pipeline **no mockea la base de datos** — los tests corren contra PostgreSQ
 
 ```bash
 # Ejecutar todos los tests
-./mvnw test
+./mvnw test -pl user-service-events,user-service-core --also-make
 
 # Ejecutar un test específico
-./mvnw test -Dtest=NombreDeClaseTest
+./mvnw test -Dtest=NombreDeClaseTest -pl user-service-core
 ```
 
 Cobertura actual:
 
-| Capa                  | Tests                              |
-|-----------------------|------------------------------------|
-| Mediator              | `MediatorTest`                     |
-| Handlers HTTP         | `CreateUserHandlerTest`, `DeleteUserHandlerTest`, `UpdateUserHandlerTest` |
-| Controller            | `UserControllerTest`               |
+| Capa | Tests |
+|---|---|
+| Mediator | `MediatorTest` |
+| Handlers HTTP | `CreateUserHandlerTest`, `DeleteUserHandlerTest`, `UpdateUserHandlerTest` |
+| Controller | `UserControllerTest` |
 
 ---
 
@@ -254,6 +313,8 @@ Cobertura actual:
 - [x] Schemas Avro con Schema Registry
 - [x] Tests unitarios de handlers y controller
 - [x] CI/CD pipeline (GitHub Actions)
+- [x] Proyecto multi-módulo Maven (`user-service-events` + `user-service-core`)
+- [x] Publicación de `user-service-events` en GitHub Packages
 - [ ] Transactional Outbox pattern para publicación fiable de eventos
 - [ ] Dead Letter Queue (DLQ) para eventos fallidos
 - [ ] Comunicación REST entre servicios

@@ -1,12 +1,12 @@
-name: CI
+name: CD — Publish package
 
 on:
-  pull_request:
+  push:
     branches: [main]
 
 jobs:
-  test:
-    name: Tests
+  publish:
+    name: Publish to GitHub Packages
     runs-on: ubuntu-latest
 
     services:
@@ -38,7 +38,7 @@ jobs:
           server-username: MAVEN_USERNAME
           server-password: MAVEN_TOKEN
 
-      - name: Run tests
+      - name: Publish package
         env:
           MAVEN_USERNAME: ${{ github.actor }}
           MAVEN_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
@@ -49,4 +49,4 @@ jobs:
           DB_PASSWORD: ci_password
           KAFKA_BOOTSTRAP_SERVERS: localhost:9092
           SCHEMA_REGISTRY_URL: http://localhost:8081
-        run: ./mvnw clean test -pl user-service-events,user-service-core --also-make
+        run: ./mvnw --no-transfer-progress deploy -DskipTests
