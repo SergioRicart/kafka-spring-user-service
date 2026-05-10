@@ -12,7 +12,7 @@
 
 	<groupId>com.sergioricart</groupId>
 	<artifactId>kafka-spring-user-service</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<packaging>pom</packaging>
 	<name>kafka-spring-user-service</name>
 	<url>https://github.com/SergioRicart/kafka-spring-user-service</url>
@@ -36,7 +36,7 @@
 			<url>https://packages.confluent.io/maven/</url>
 		</repository>
 		<repository>
-			<id>github</id>
+			<id>sergioricart-commons</id>
 			<name>GitHub Packages</name>
 			<url>https://maven.pkg.github.com/SergioRicart/microservice-commons</url>
 		</repository>

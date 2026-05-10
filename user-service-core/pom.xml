@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.sergioricart</groupId>
 		<artifactId>kafka-spring-user-service</artifactId>
-		<version>1.0.0</version>
+		<version>1.0.1</version>
 	</parent>
 
 	<artifactId>user-service-core</artifactId>
@@ -22,14 +22,14 @@
 
 		<dependency>
 			<groupId>com.sergioricart</groupId>
-			<artifactId>user-service-events</artifactId>
+			<artifactId>sergioricart-user-events</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.sergioricart</groupId>
-			<artifactId>microservice-commons</artifactId>
-			<version>1.0.0</version>
+			<artifactId>sergioricart-microservice-commons</artifactId>
+			<version>1.0.2</version>
 		</dependency>
 
 		<dependency>
