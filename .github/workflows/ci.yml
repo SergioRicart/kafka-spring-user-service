@@ -49,4 +49,4 @@ jobs:
           DB_PASSWORD: ci_password
           KAFKA_BOOTSTRAP_SERVERS: localhost:9092
           SCHEMA_REGISTRY_URL: http://localhost:8081
-        run: ./mvnw clean test
+        run: ./mvnw clean test -pl user-service-events,user-service-core --also-make

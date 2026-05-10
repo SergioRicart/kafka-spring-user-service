@@ -1,0 +1,135 @@
+asyncapi: '2.6.0'
+info:
+  title: User Events API
+  version: '1.0.0'
+  description: >
+    API asíncrona del user_service. Describe los eventos publicados en Kafka cuando
+    se crean, actualizan o eliminan usuarios. Los schemas fuente están en
+    user-service-events/src/main/resources/schemas/user/ y se publican en GitHub Packages
+    como artefacto Maven (user-service-events) para que otros servicios los consuman
+    con tipado fuerte en compilación.
+
+servers:
+  local:
+    url: localhost:9092
+    protocol: kafka
+    description: Broker local levantado con Docker Compose
+
+defaultContentType: application/avro
+
+channels:
+  user.events:
+    description: >
+      Topic principal del user_service. Contiene todos los eventos del ciclo de vida
+      de un usuario. Los mensajes se serializan en Avro y se validan contra Confluent
+      Schema Registry en runtime.
+    publish:
+      summary: El user_service publica eventos de usuario en este topic
+      message:
+        oneOf:
+          - $ref: '#/components/messages/UserCreatedEventMessage'
+          - $ref: '#/components/messages/UserUpdatedEventMessage'
+          - $ref: '#/components/messages/UserDeletedEventMessage'
+
+components:
+  messages:
+    UserCreatedEventMessage:
+      name: UserCreatedEvent
+      title: Usuario creado
+      summary: Publicado cuando se crea un nuevo usuario via POST /api/v1/users/create
+      contentType: application/avro
+      payload:
+        $ref: '#/components/schemas/UserCreatedEvent'
+
+    UserUpdatedEventMessage:
+      name: UserUpdatedEvent
+      title: Usuario actualizado
+      summary: Publicado cuando se actualiza un usuario via PATCH /api/v1/users/update/{id}
+      contentType: application/avro
+      payload:
+        $ref: '#/components/schemas/UserUpdatedEvent'
+
+    UserDeletedEventMessage:
+      name: UserDeletedEvent
+      title: Usuario eliminado
+      summary: Publicado cuando se elimina un usuario via DELETE /api/v1/users/delete/{id}
+      contentType: application/avro
+      payload:
+        $ref: '#/components/schemas/UserDeletedEvent'
+
+  schemas:
+    UserCreatedEvent:
+      type: object
+      properties:
+        firstName:
+          type: string
+          examples:
+            - Sergio
+        lastName:
+          type: string
+          examples:
+            - Ricart
+        email:
+          type: string
+          examples:
+            - sergio@example.com
+        role:
+          type: string
+          examples:
+            - USER
+        password:
+          type: string
+          description: Contraseña hasheada
+        timestamp:
+          type: integer
+          format: int64
+          description: Epoch millis UTC
+          examples:
+            - 1746915600000
+
+    UserUpdatedEvent:
+      type: object
+      properties:
+        id:
+          type: string
+          examples:
+            - 02489f68-2603-42d7-b494-42a95689cd16
+        firstName:
+          type: string
+          examples:
+            - Sergio
+        lastName:
+          type: string
+          examples:
+            - Ricart
+        email:
+          type: string
+          examples:
+            - sergio@example.com
+        role:
+          type: string
+          examples:
+            - ADMIN
+        password:
+          type: string
+          description: Contraseña hasheada
+        timestamp:
+          type: integer
+          format: int64
+          description: Epoch millis UTC
+          examples:
+            - 1746915600000
+
+    UserDeletedEvent:
+      type: object
+      properties:
+        id:
+          type: string
+          examples:
+            - 02489f68-2603-42d7-b494-42a95689cd16
+        timestamp:
+          type: integer
+          format: int64
+          description: Epoch millis UTC
+          examples:
+            - 1746915600000
