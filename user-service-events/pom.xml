@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>com.sergioricart</groupId>
 		<artifactId>kafka-spring-user-service</artifactId>
-		<version>1.0.0</version>
+		<version>1.0.1</version>
 	</parent>
 
-	<artifactId>user-service-events</artifactId>
+	<artifactId>sergioricart-user-events</artifactId>
 	<packaging>jar</packaging>
-	<name>user-service-events</name>
+	<name>sergioricart-user-events</name>
 	<description>Avro event schemas for user-service — consumible as a Maven dependency</description>
 
 	<dependencies>
