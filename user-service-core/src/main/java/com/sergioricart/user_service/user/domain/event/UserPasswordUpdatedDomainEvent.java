@@ -10,6 +10,7 @@ import java.time.Instant;
 @Builder
 public class UserPasswordUpdatedDomainEvent {
 
+    private String id;
     private String firstName;
     private String lastName;
     private String email;
@@ -17,6 +18,7 @@ public class UserPasswordUpdatedDomainEvent {
 
     public static UserPasswordUpdatedDomainEvent of(User user) {
         return UserPasswordUpdatedDomainEvent.builder()
+                .id(user.getId())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .email(user.getEmail())

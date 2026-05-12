@@ -3,6 +3,7 @@ package com.sergioricart.user_service.user.application.http.update;
 import com.sergioricart.commons.application.CommandHandler;
 import com.sergioricart.commons.application.VoidResponse;
 import com.sergioricart.user_service.user.domain.constant.UserConstants;
+import com.sergioricart.user_service.user.domain.entity.Role;
 import com.sergioricart.user_service.user.domain.entity.User;
 import com.sergioricart.user_service.user.domain.event.UserPasswordUpdatedDomainEvent;
 import com.sergioricart.user_service.user.domain.event.UserUpdatedDomainEvent;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.Objects;
 
 @Component
 @Slf4j
@@ -38,39 +40,35 @@ public class UpdateUserHandler implements CommandHandler<UpdateUserCommand, Void
                 new UserNotFoundException(UserConstants.USER_NOT_FOUND_MESSAGE)
         );
 
-        userEntity.setId(userCommand.getId());
+        String originalFirstName = userEntity.getFirstName();
+        String originalLastName  = userEntity.getLastName();
+        String originalEmail     = userEntity.getEmail();
+        Role   originalRole      = userEntity.getRole();
+
+        boolean passwordChanged = userCommand.getPassword() != null;
+
+        boolean anyOtherValueChanged =
+                isChanged(userCommand.getFirstName(), originalFirstName) ||
+                isChanged(userCommand.getLastName(),  originalLastName)  ||
+                isChanged(userCommand.getEmail(),     originalEmail)     ||
+                isChanged(userCommand.getRole(),      originalRole);
 
         if (userCommand.getFirstName() != null) userEntity.setFirstName(userCommand.getFirstName());
-        if (userCommand.getLastName() != null) userEntity.setLastName(userCommand.getLastName());
-        if (userCommand.getEmail() != null) userEntity.setEmail(userCommand.getEmail());
-        if (userCommand.getRole() != null) userEntity.setRole(userCommand.getRole());
-        if (userCommand.getPassword() != null) userEntity.setPassword(passwordEncoder.encode(userCommand.getPassword()));
+        if (userCommand.getLastName()  != null) userEntity.setLastName(userCommand.getLastName());
+        if (userCommand.getEmail()     != null) userEntity.setEmail(userCommand.getEmail());
+        if (userCommand.getRole()      != null) userEntity.setRole(userCommand.getRole());
+        if (passwordChanged) userEntity.setPassword(passwordEncoder.encode(userCommand.getPassword()));
 
         userEntity.setUpdatedAt(Instant.now());
 
         userRepository.update(userEntity);
 
-        boolean passwordChanged = userCommand.getPassword() != null && !userCommand.getPassword().equals(userEntity.getPassword());
-
-        boolean anyOtherValueChanged = !userCommand.getFirstName().equals(userEntity.getFirstName()) ||
-                !userCommand.getLastName().equals(userEntity.getLastName()) ||
-                !userCommand.getEmail().equals(userEntity.getEmail()) ||
-                !userCommand.getRole().equals(userEntity.getRole());
-
-        if (passwordChanged && anyOtherValueChanged) {
-
+        if (passwordChanged) {
             userEvent.sendUserPasswordUpdatedEvent(UserPasswordUpdatedDomainEvent.of(userEntity));
+        }
 
+        if (anyOtherValueChanged) {
             userEvent.sendUserUpdatedEvent(UserUpdatedDomainEvent.of(userEntity));
-
-        } else if (passwordChanged) {
-
-            userEvent.sendUserPasswordUpdatedEvent(UserPasswordUpdatedDomainEvent.of(userEntity));
-
-        } else if (anyOtherValueChanged) {
-
-            userEvent.sendUserUpdatedEvent(UserUpdatedDomainEvent.of(userEntity));
-
         }
 
         return new VoidResponse();
@@ -80,6 +78,10 @@ public class UpdateUserHandler implements CommandHandler<UpdateUserCommand, Void
     @Override
     public Class<UpdateUserCommand> getCommandType() {
         return UpdateUserCommand.class;
+    }
+
+    private static <T> boolean isChanged(T incoming, T current) {
+        return incoming != null && !Objects.equals(incoming, current);
     }
 
 }

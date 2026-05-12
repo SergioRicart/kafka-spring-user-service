@@ -3,6 +3,7 @@ package com.sergioricart.user_service.user.application.http.update;
 import com.sergioricart.user_service.fixtures.UserFixture;
 import com.sergioricart.user_service.user.domain.constant.UserConstants;
 import com.sergioricart.user_service.user.domain.entity.User;
+import com.sergioricart.user_service.user.domain.event.UserPasswordUpdatedDomainEvent;
 import com.sergioricart.user_service.user.domain.event.UserUpdatedDomainEvent;
 import com.sergioricart.user_service.user.domain.exception.UserNotFoundException;
 import com.sergioricart.user_service.user.domain.port.UserEvent;
@@ -83,6 +84,44 @@ class UpdateUserHandlerTest {
         verify(userRepository).update(usuario);
         verify(userRepository, never()).save(any());
         verify(userEvent).sendUserUpdatedEvent(any(UserUpdatedDomainEvent.class));
+        verify(userEvent, never()).sendUserPasswordUpdatedEvent(any());
+    }
+
+    @Test
+    void handle_whenOnlyPasswordChanges_sendsOnlyPasswordEvent() {
+        User usuario = UserFixture.aUser();
+        when(userRepository.findById(UserFixture.USER_ID)).thenReturn(Optional.of(usuario));
+
+        handler.handle(UserFixture.aPasswordOnlyUpdateCommand());
+
+        verify(userRepository).update(usuario);
+        verify(userEvent).sendUserPasswordUpdatedEvent(any(UserPasswordUpdatedDomainEvent.class));
+        verify(userEvent, never()).sendUserUpdatedEvent(any());
+        assertThat(usuario.getPassword()).isEqualTo(UserFixture.UPDATED_PASSWORD);
+    }
+
+    @Test
+    void handle_whenPasswordAndOtherFieldsChange_sendsBothEvents() {
+        User usuario = UserFixture.aUser();
+        when(userRepository.findById(UserFixture.USER_ID)).thenReturn(Optional.of(usuario));
+
+        handler.handle(UserFixture.aFullUpdateUserCommand());
+
+        verify(userRepository).update(usuario);
+        verify(userEvent).sendUserPasswordUpdatedEvent(any(UserPasswordUpdatedDomainEvent.class));
+        verify(userEvent).sendUserUpdatedEvent(any(UserUpdatedDomainEvent.class));
+    }
+
+    @Test
+    void handle_whenCommandRepeatsCurrentValues_doesNotPublishUpdatedEvent() {
+        User usuario = UserFixture.aUser();
+        when(userRepository.findById(UserFixture.USER_ID)).thenReturn(Optional.of(usuario));
+
+        handler.handle(UserFixture.aNoOpUpdateUserCommand());
+
+        verify(userRepository).update(usuario);
+        verify(userEvent, never()).sendUserUpdatedEvent(any());
+        verify(userEvent, never()).sendUserPasswordUpdatedEvent(any());
     }
 
     @Test

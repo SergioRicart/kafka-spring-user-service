@@ -81,6 +81,23 @@ public final class UserFixture {
         return command;
     }
 
+    public static UpdateUserCommand aPasswordOnlyUpdateCommand() {
+        UpdateUserCommand command = new UpdateUserCommand();
+        command.setId(USER_ID);
+        command.setPassword(UPDATED_PASSWORD);
+        return command;
+    }
+
+    public static UpdateUserCommand aNoOpUpdateUserCommand() {
+        UpdateUserCommand command = new UpdateUserCommand();
+        command.setId(USER_ID);
+        command.setFirstName(FIRST_NAME);
+        command.setLastName(LAST_NAME);
+        command.setEmail(EMAIL);
+        command.setRole(ROLE);
+        return command;
+    }
+
     // ── DTOs HTTP ─────────────────────────────────────────────────────────────
 
     public static UserCreatedRequest aUserCreatedRequest() {
