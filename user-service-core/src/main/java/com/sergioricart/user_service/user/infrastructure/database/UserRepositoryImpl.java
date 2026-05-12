@@ -1,7 +1,7 @@
 package com.sergioricart.user_service.user.infrastructure.database;
 
 import com.sergioricart.user_service.user.domain.constant.UserConstants;
-import com.sergioricart.user_service.user.domain.entiry.User;
+import com.sergioricart.user_service.user.domain.entity.User;
 import com.sergioricart.user_service.user.domain.exception.UserNotFoundException;
 import com.sergioricart.user_service.user.domain.port.UserRepository;
 import lombok.RequiredArgsConstructor;

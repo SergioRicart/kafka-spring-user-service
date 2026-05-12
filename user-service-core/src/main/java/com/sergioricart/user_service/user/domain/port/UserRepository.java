@@ -1,6 +1,6 @@
 package com.sergioricart.user_service.user.domain.port;
 
-import com.sergioricart.user_service.user.domain.entiry.User;
+import com.sergioricart.user_service.user.domain.entity.User;
 
 import java.util.Optional;
 

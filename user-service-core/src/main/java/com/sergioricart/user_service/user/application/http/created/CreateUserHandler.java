@@ -2,8 +2,8 @@ package com.sergioricart.user_service.user.application.http.created;
 
 import com.sergioricart.commons.application.CommandHandler;
 import com.sergioricart.commons.application.VoidResponse;
-import com.sergioricart.user_service.user.domain.entiry.Role;
-import com.sergioricart.user_service.user.domain.entiry.User;
+import com.sergioricart.user_service.user.domain.entity.Role;
+import com.sergioricart.user_service.user.domain.entity.User;
 import com.sergioricart.user_service.user.domain.event.UserCreatedDomainEvent;
 import com.sergioricart.user_service.user.domain.port.UserEvent;
 import com.sergioricart.user_service.user.domain.port.UserRepository;

@@ -4,6 +4,10 @@
   "name": "UserCreatedEvent",
   "fields": [
     {
+      "name": "id",
+      "type": "string"
+    },
+    {
       "name": "firstName",
       "type": "string"
     },
@@ -13,13 +17,6 @@
     },
     {
       "name": "email",
-      "type": "string"
-    },
-    {
-      "name": "role",
-      "type": "string"
-    },{
-      "name": "password",
       "type": "string"
     },
     {

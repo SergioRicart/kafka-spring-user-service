@@ -3,8 +3,8 @@ package com.sergioricart.user_service.fixtures;
 import com.sergioricart.user_service.user.application.http.created.CreateUserCommand;
 import com.sergioricart.user_service.user.application.http.delete.DeleteUserCommand;
 import com.sergioricart.user_service.user.application.http.update.UpdateUserCommand;
-import com.sergioricart.user_service.user.domain.entiry.Role;
-import com.sergioricart.user_service.user.domain.entiry.User;
+import com.sergioricart.user_service.user.domain.entity.Role;
+import com.sergioricart.user_service.user.domain.entity.User;
 import com.sergioricart.user_service.user.infrastructure.api.dto.request.UserCreatedRequest;
 import com.sergioricart.user_service.user.infrastructure.api.dto.request.UserUpdatedRequest;
 
@@ -78,6 +78,23 @@ public final class UserFixture {
         UpdateUserCommand command = new UpdateUserCommand();
         command.setId(USER_ID);
         command.setFirstName(UPDATED_FIRST_NAME);
+        return command;
+    }
+
+    public static UpdateUserCommand aPasswordOnlyUpdateCommand() {
+        UpdateUserCommand command = new UpdateUserCommand();
+        command.setId(USER_ID);
+        command.setPassword(UPDATED_PASSWORD);
+        return command;
+    }
+
+    public static UpdateUserCommand aNoOpUpdateUserCommand() {
+        UpdateUserCommand command = new UpdateUserCommand();
+        command.setId(USER_ID);
+        command.setFirstName(FIRST_NAME);
+        command.setLastName(LAST_NAME);
+        command.setEmail(EMAIL);
+        command.setRole(ROLE);
         return command;
     }
 

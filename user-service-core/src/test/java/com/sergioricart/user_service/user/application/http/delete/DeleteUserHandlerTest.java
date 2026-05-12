@@ -2,7 +2,7 @@ package com.sergioricart.user_service.user.application.http.delete;
 
 import com.sergioricart.user_service.fixtures.UserFixture;
 import com.sergioricart.user_service.user.domain.constant.UserConstants;
-import com.sergioricart.user_service.user.domain.entiry.User;
+import com.sergioricart.user_service.user.domain.entity.User;
 import com.sergioricart.user_service.user.domain.event.UserDeletedDomainEvent;
 import com.sergioricart.user_service.user.domain.exception.UserNotFoundException;
 import com.sergioricart.user_service.user.domain.port.UserEvent;

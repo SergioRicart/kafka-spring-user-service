@@ -12,7 +12,7 @@
 
 	<groupId>com.sergioricart</groupId>
 	<artifactId>kafka-spring-user-service</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>kafka-spring-user-service</name>
 	<url>https://github.com/SergioRicart/kafka-spring-user-service</url>
