@@ -1,6 +1,6 @@
 package com.sergioricart.user_service.user.infrastructure.api.dto.response;
 
-import com.sergioricart.user_service.user.domain.entiry.Role;
+import com.sergioricart.user_service.user.domain.entity.Role;
 import lombok.Builder;
 import lombok.Data;
 

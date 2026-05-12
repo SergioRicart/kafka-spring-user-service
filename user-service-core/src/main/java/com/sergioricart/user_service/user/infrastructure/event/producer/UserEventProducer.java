@@ -4,6 +4,7 @@ import com.sergioricart.commons.infrastructure.event.producer.KafkaProducer;
 import com.sergioricart.user_service.user.domain.constant.UserConstants;
 import com.sergioricart.user_service.user.domain.event.UserCreatedDomainEvent;
 import com.sergioricart.user_service.user.domain.event.UserDeletedDomainEvent;
+import com.sergioricart.user_service.user.domain.event.UserPasswordUpdatedDomainEvent;
 import com.sergioricart.user_service.user.domain.event.UserUpdatedDomainEvent;
 import com.sergioricart.user_service.user.domain.port.UserEvent;
 import com.sergioricart.user_service.user.infrastructure.event.mapper.UserEventMapper;
@@ -48,6 +49,15 @@ public class UserEventProducer implements UserEvent {
         log.info("UserEventProducer sending user updated event {}", event);
 
         kafkaProducer.send(topic, userEventMapper.mapToUserUpdatedEvent(event));
+
+    }
+
+    @Override
+    public void sendUserPasswordUpdatedEvent(UserPasswordUpdatedDomainEvent event) {
+
+        log.info("UserEventProducer sending user password updated event {}", event);
+
+        kafkaProducer.send(topic, userEventMapper.mapToUserPasswordUpdatedEvent(event));
 
     }
 

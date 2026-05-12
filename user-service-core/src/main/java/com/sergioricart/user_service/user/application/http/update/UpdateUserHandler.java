@@ -3,7 +3,8 @@ package com.sergioricart.user_service.user.application.http.update;
 import com.sergioricart.commons.application.CommandHandler;
 import com.sergioricart.commons.application.VoidResponse;
 import com.sergioricart.user_service.user.domain.constant.UserConstants;
-import com.sergioricart.user_service.user.domain.entiry.User;
+import com.sergioricart.user_service.user.domain.entity.User;
+import com.sergioricart.user_service.user.domain.event.UserPasswordUpdatedDomainEvent;
 import com.sergioricart.user_service.user.domain.event.UserUpdatedDomainEvent;
 import com.sergioricart.user_service.user.domain.exception.UserNotFoundException;
 import com.sergioricart.user_service.user.domain.port.UserEvent;
@@ -49,7 +50,28 @@ public class UpdateUserHandler implements CommandHandler<UpdateUserCommand, Void
 
         userRepository.update(userEntity);
 
-        userEvent.sendUserUpdatedEvent(UserUpdatedDomainEvent.of(userEntity));
+        boolean passwordChanged = userCommand.getPassword() != null && !userCommand.getPassword().equals(userEntity.getPassword());
+
+        boolean anyOtherValueChanged = !userCommand.getFirstName().equals(userEntity.getFirstName()) ||
+                !userCommand.getLastName().equals(userEntity.getLastName()) ||
+                !userCommand.getEmail().equals(userEntity.getEmail()) ||
+                !userCommand.getRole().equals(userEntity.getRole());
+
+        if (passwordChanged && anyOtherValueChanged) {
+
+            userEvent.sendUserPasswordUpdatedEvent(UserPasswordUpdatedDomainEvent.of(userEntity));
+
+            userEvent.sendUserUpdatedEvent(UserUpdatedDomainEvent.of(userEntity));
+
+        } else if (passwordChanged) {
+
+            userEvent.sendUserPasswordUpdatedEvent(UserPasswordUpdatedDomainEvent.of(userEntity));
+
+        } else if (anyOtherValueChanged) {
+
+            userEvent.sendUserUpdatedEvent(UserUpdatedDomainEvent.of(userEntity));
+
+        }
 
         return new VoidResponse();
 

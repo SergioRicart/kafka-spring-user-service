@@ -1,6 +1,6 @@
 package com.sergioricart.user_service.user.infrastructure.database;
 
-import com.sergioricart.user_service.user.domain.entiry.Role;
+import com.sergioricart.user_service.user.domain.entity.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

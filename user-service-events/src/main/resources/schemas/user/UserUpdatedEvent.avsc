@@ -22,9 +22,6 @@
     {
       "name": "role",
       "type": "string"
-    },{
-      "name": "password",
-      "type": "string"
     },
     {
       "name": "timestamp",

@@ -1,6 +1,6 @@
 package com.sergioricart.user_service.user.domain.event;
 
-import com.sergioricart.user_service.user.domain.entiry.User;
+import com.sergioricart.user_service.user.domain.entity.User;
 import lombok.Builder;
 import lombok.Data;
 
@@ -15,7 +15,6 @@ public class UserUpdatedDomainEvent {
     private String lastName;
     private String email;
     private String role;
-    private String password;
     private Long timestamp;
 
     public static UserUpdatedDomainEvent of(User user) {
@@ -25,7 +24,6 @@ public class UserUpdatedDomainEvent {
                 .lastName(user.getLastName())
                 .email(user.getEmail())
                 .role(user.getRole().name())
-                .password(user.getPassword())
                 .timestamp(Instant.now().toEpochMilli())
                 .build();
     }
