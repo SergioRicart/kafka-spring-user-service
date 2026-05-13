@@ -23,7 +23,7 @@ public class UserCreatedDomainEvent {
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .email(user.getEmail())
-                .role(user.getRole().name())
+                .role(user.getRoleId())
                 .timestamp(Instant.now().toEpochMilli())
                 .build();
     }

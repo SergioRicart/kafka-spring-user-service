@@ -3,7 +3,6 @@ package com.sergioricart.user_service.user.application.http.update;
 import com.sergioricart.commons.application.CommandHandler;
 import com.sergioricart.commons.application.VoidResponse;
 import com.sergioricart.user_service.user.domain.constant.UserConstants;
-import com.sergioricart.user_service.user.domain.entity.Role;
 import com.sergioricart.user_service.user.domain.entity.User;
 import com.sergioricart.user_service.user.domain.event.UserPasswordUpdatedDomainEvent;
 import com.sergioricart.user_service.user.domain.event.UserUpdatedDomainEvent;
@@ -43,7 +42,7 @@ public class UpdateUserHandler implements CommandHandler<UpdateUserCommand, Void
         String originalFirstName = userEntity.getFirstName();
         String originalLastName  = userEntity.getLastName();
         String originalEmail     = userEntity.getEmail();
-        Role   originalRole      = userEntity.getRole();
+        String   originalRole      = userEntity.getRoleId();
 
         boolean passwordChanged = userCommand.getPassword() != null;
 
@@ -51,12 +50,12 @@ public class UpdateUserHandler implements CommandHandler<UpdateUserCommand, Void
                 isChanged(userCommand.getFirstName(), originalFirstName) ||
                 isChanged(userCommand.getLastName(),  originalLastName)  ||
                 isChanged(userCommand.getEmail(),     originalEmail)     ||
-                isChanged(userCommand.getRole(),      originalRole);
+                isChanged(userCommand.getRoleId(),      originalRole);
 
         if (userCommand.getFirstName() != null) userEntity.setFirstName(userCommand.getFirstName());
         if (userCommand.getLastName()  != null) userEntity.setLastName(userCommand.getLastName());
         if (userCommand.getEmail()     != null) userEntity.setEmail(userCommand.getEmail());
-        if (userCommand.getRole()      != null) userEntity.setRole(userCommand.getRole());
+        if (userCommand.getRoleId()      != null) userEntity.setRoleId(userCommand.getRoleId());
         if (passwordChanged) userEntity.setPassword(passwordEncoder.encode(userCommand.getPassword()));
 
         userEntity.setUpdatedAt(Instant.now());

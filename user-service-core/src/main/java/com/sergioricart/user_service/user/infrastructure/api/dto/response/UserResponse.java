@@ -1,6 +1,5 @@
 package com.sergioricart.user_service.user.infrastructure.api.dto.response;
 
-import com.sergioricart.user_service.user.domain.entity.Role;
 import lombok.Builder;
 import lombok.Data;
 
@@ -18,7 +17,7 @@ public class UserResponse {
 
     String email;
 
-    Role role;
+    String roleId;
 
     Instant createdAt;
 

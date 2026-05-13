@@ -16,6 +16,9 @@ public class UserCreatedRequest {
 
     String lastName;
 
+    @NotBlank(message = UserConstants.ROLE_ID_NOT_BLANK)
+    String roleId;
+
     @NotBlank(message = UserConstants.EMAIL_NOT_BLANK)
     String email;
 

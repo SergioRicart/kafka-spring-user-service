@@ -20,7 +20,7 @@
       "type": "string"
     },
     {
-      "name": "role",
+      "name": "roleId",
       "type": "string"
     },
     {

@@ -11,6 +11,9 @@ import java.time.Instant;
 public class UserDeletedDomainEvent {
 
     private String id;
+    private String firstName;
+    private String lastName;
+    private String email;
     private Long timestamp;
 
     public static UserDeletedDomainEvent of(User user) {

@@ -55,7 +55,7 @@ class UserControllerTest {
 
     @Test
     void createUser_givenMissingFirstName_returns400() throws Exception {
-        UserCreatedRequest request = new UserCreatedRequest(null, UserFixture.LAST_NAME, UserFixture.EMAIL, UserFixture.PASSWORD);
+        UserCreatedRequest request = new UserCreatedRequest(null, UserFixture.LAST_NAME, UserFixture.ROLE,  UserFixture.EMAIL, UserFixture.PASSWORD);
 
         mockMvc.perform(post(UserFixture.CREATE_USER_PATH)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -65,7 +65,7 @@ class UserControllerTest {
 
     @Test
     void createUser_givenBlankEmail_returns400() throws Exception {
-        UserCreatedRequest request = new UserCreatedRequest(UserFixture.FIRST_NAME, UserFixture.LAST_NAME, "", UserFixture.PASSWORD);
+        UserCreatedRequest request = new UserCreatedRequest(UserFixture.FIRST_NAME, UserFixture.LAST_NAME, UserFixture.ROLE, "", UserFixture.PASSWORD);
 
         mockMvc.perform(post(UserFixture.CREATE_USER_PATH)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -75,7 +75,7 @@ class UserControllerTest {
 
     @Test
     void createUser_givenMissingPassword_returns400() throws Exception {
-        UserCreatedRequest request = new UserCreatedRequest(UserFixture.FIRST_NAME, UserFixture.LAST_NAME, UserFixture.EMAIL, null);
+        UserCreatedRequest request = new UserCreatedRequest(UserFixture.FIRST_NAME, UserFixture.LAST_NAME, UserFixture.ROLE, UserFixture.EMAIL, null);
 
         mockMvc.perform(post(UserFixture.CREATE_USER_PATH)
                         .contentType(MediaType.APPLICATION_JSON)

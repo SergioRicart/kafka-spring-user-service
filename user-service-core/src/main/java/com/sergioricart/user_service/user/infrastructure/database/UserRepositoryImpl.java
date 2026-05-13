@@ -44,7 +44,7 @@ public class UserRepositoryImpl implements UserRepository {
         userEntity.setFirstName(user.getFirstName());
         userEntity.setLastName(user.getLastName());
         userEntity.setEmail(user.getEmail());
-        userEntity.setRole(user.getRole());
+        userEntity.setRoleId(user.getRoleId());
         userEntity.setPassword(user.getPassword());
         userEntity.setUpdatedAt(user.getUpdatedAt());
 

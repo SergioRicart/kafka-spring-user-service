@@ -2,7 +2,6 @@ package com.sergioricart.user_service.user.application.http.created;
 
 import com.sergioricart.commons.application.CommandHandler;
 import com.sergioricart.commons.application.VoidResponse;
-import com.sergioricart.user_service.user.domain.entity.Role;
 import com.sergioricart.user_service.user.domain.entity.User;
 import com.sergioricart.user_service.user.domain.event.UserCreatedDomainEvent;
 import com.sergioricart.user_service.user.domain.port.UserEvent;
@@ -14,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.UUID;
 
 @Component
 @Slf4j
@@ -33,10 +33,11 @@ public class CreateUserHandler implements CommandHandler<CreateUserCommand, Void
         log.info("CreateUserHandler received command {}", userCommand);
 
         User user = User.builder()
+                .id(UUID.randomUUID().toString())
                 .firstName(userCommand.getFirstName())
                 .lastName(userCommand.getLastName())
                 .email(userCommand.getEmail())
-                .role(Role.USER)
+                .roleId(userCommand.getRoleId())
                 .password(passwordEncoder.encode(userCommand.getPassword()))
                 .createdAt(Instant.now())
                 .build();
