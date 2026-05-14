@@ -52,6 +52,7 @@ public final class UserFixture {
         command.setFirstName(FIRST_NAME);
         command.setLastName(LAST_NAME);
         command.setEmail(EMAIL);
+        command.setRoleId(ROLE);
         command.setPassword(PASSWORD);
         return command;
     }

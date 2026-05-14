@@ -42,7 +42,7 @@ public class UpdateUserHandler implements CommandHandler<UpdateUserCommand, Void
         String originalFirstName = userEntity.getFirstName();
         String originalLastName  = userEntity.getLastName();
         String originalEmail     = userEntity.getEmail();
-        String   originalRole      = userEntity.getRoleId();
+        String originalRole      = userEntity.getRoleId();
 
         boolean passwordChanged = userCommand.getPassword() != null;
 

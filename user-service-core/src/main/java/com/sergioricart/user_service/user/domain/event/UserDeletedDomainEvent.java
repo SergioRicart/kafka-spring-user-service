@@ -19,6 +19,9 @@ public class UserDeletedDomainEvent {
     public static UserDeletedDomainEvent of(User user) {
         return UserDeletedDomainEvent.builder()
                 .id(user.getId())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .email(user.getEmail())
                 .timestamp(Instant.now().toEpochMilli())
                 .build();
     }
