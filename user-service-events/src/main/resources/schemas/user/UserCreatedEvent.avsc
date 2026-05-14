@@ -20,6 +20,10 @@
       "type": "string"
     },
     {
+      "name": "roleId",
+      "type": "string"
+    },
+    {
       "name": "timestamp",
       "type": "long"
     }

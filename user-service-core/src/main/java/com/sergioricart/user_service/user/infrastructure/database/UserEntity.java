@@ -1,6 +1,5 @@
 package com.sergioricart.user_service.user.infrastructure.database;
 
-import com.sergioricart.user_service.user.domain.entity.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,7 +15,6 @@ import java.time.Instant;
 public class UserEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
     private String firstName;
@@ -25,8 +23,7 @@ public class UserEntity {
 
     private String email;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    private String roleId;
 
     @Transient
     private Instant timestamp;

@@ -14,7 +14,7 @@ public class UserUpdatedDomainEvent {
     private String firstName;
     private String lastName;
     private String email;
-    private String role;
+    private String roleId;
     private Long timestamp;
 
     public static UserUpdatedDomainEvent of(User user) {
@@ -23,7 +23,7 @@ public class UserUpdatedDomainEvent {
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .email(user.getEmail())
-                .role(user.getRole().name())
+                .roleId(user.getRoleId())
                 .timestamp(Instant.now().toEpochMilli())
                 .build();
     }

@@ -11,11 +11,17 @@ import java.time.Instant;
 public class UserDeletedDomainEvent {
 
     private String id;
+    private String firstName;
+    private String lastName;
+    private String email;
     private Long timestamp;
 
     public static UserDeletedDomainEvent of(User user) {
         return UserDeletedDomainEvent.builder()
                 .id(user.getId())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .email(user.getEmail())
                 .timestamp(Instant.now().toEpochMilli())
                 .build();
     }

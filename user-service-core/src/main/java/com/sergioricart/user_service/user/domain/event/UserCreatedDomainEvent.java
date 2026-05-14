@@ -14,7 +14,7 @@ public class UserCreatedDomainEvent {
     private String firstName;
     private String lastName;
     private String email;
-    private String role;
+    private String roleId;
     private Long timestamp;
 
     public static UserCreatedDomainEvent of(User user) {
@@ -23,7 +23,7 @@ public class UserCreatedDomainEvent {
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .email(user.getEmail())
-                .role(user.getRole().name())
+                .roleId(user.getRoleId())
                 .timestamp(Instant.now().toEpochMilli())
                 .build();
     }

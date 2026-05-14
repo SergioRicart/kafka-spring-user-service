@@ -1,6 +1,5 @@
 package com.sergioricart.user_service.user.infrastructure.api.dto.request;
 
-import com.sergioricart.user_service.user.domain.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +17,7 @@ public class UserUpdatedRequest {
 
      String email;
 
-     Role role;
+     String roleId;
 
      Instant timestamp;
 

@@ -10,6 +10,7 @@ public class CreateUserCommand implements Command<VoidResponse> {
     private String firstName;
     private String lastName;
     private String email;
+    private String roleId;
     private String password;
 
 }

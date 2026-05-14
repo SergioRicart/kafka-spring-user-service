@@ -55,7 +55,7 @@ class UpdateUserHandlerTest {
         assertThat(usuario.getLastName()).isEqualTo(UserFixture.UPDATED_LAST_NAME);
         assertThat(usuario.getEmail()).isEqualTo(UserFixture.UPDATED_EMAIL);
         assertThat(usuario.getPassword()).isEqualTo(UserFixture.UPDATED_PASSWORD);
-        assertThat(usuario.getRole()).isEqualTo(UserFixture.UPDATED_ROLE);
+        assertThat(usuario.getRoleId()).isEqualTo(UserFixture.UPDATED_ROLE);
         assertThat(usuario.getUpdatedAt()).isNotNull();
     }
 
@@ -71,7 +71,7 @@ class UpdateUserHandlerTest {
         assertThat(usuario.getLastName()).isEqualTo(UserFixture.LAST_NAME);
         assertThat(usuario.getEmail()).isEqualTo(UserFixture.EMAIL);
         assertThat(usuario.getPassword()).isEqualTo(UserFixture.PASSWORD);
-        assertThat(usuario.getRole()).isEqualTo(UserFixture.ROLE);
+        assertThat(usuario.getRoleId()).isEqualTo(UserFixture.ROLE);
     }
 
     @Test

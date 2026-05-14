@@ -3,7 +3,6 @@ package com.sergioricart.user_service.fixtures;
 import com.sergioricart.user_service.user.application.http.created.CreateUserCommand;
 import com.sergioricart.user_service.user.application.http.delete.DeleteUserCommand;
 import com.sergioricart.user_service.user.application.http.update.UpdateUserCommand;
-import com.sergioricart.user_service.user.domain.entity.Role;
 import com.sergioricart.user_service.user.domain.entity.User;
 import com.sergioricart.user_service.user.infrastructure.api.dto.request.UserCreatedRequest;
 import com.sergioricart.user_service.user.infrastructure.api.dto.request.UserUpdatedRequest;
@@ -18,13 +17,13 @@ public final class UserFixture {
     public static final String LAST_NAME      = "García";
     public static final String EMAIL          = "juan@example.com";
     public static final String PASSWORD       = "secret123";
-    public static final Role   ROLE           = Role.USER;
+    public static final String ROLE           = "1";
 
     public static final String UPDATED_FIRST_NAME = "Carlos";
     public static final String UPDATED_LAST_NAME  = "Rodríguez";
     public static final String UPDATED_EMAIL      = "carlos@example.com";
     public static final String UPDATED_PASSWORD   = "newpass";
-    public static final Role   UPDATED_ROLE       = Role.ADMIN;
+    public static final String UPDATED_ROLE       = "2";
 
     public static final String UNKNOWN_ID = "no-existe";
 
@@ -41,7 +40,7 @@ public final class UserFixture {
                 .firstName(FIRST_NAME)
                 .lastName(LAST_NAME)
                 .email(EMAIL)
-                .role(ROLE)
+                .roleId(ROLE)
                 .password(PASSWORD)
                 .build();
     }
@@ -53,6 +52,7 @@ public final class UserFixture {
         command.setFirstName(FIRST_NAME);
         command.setLastName(LAST_NAME);
         command.setEmail(EMAIL);
+        command.setRoleId(ROLE);
         command.setPassword(PASSWORD);
         return command;
     }
@@ -70,7 +70,7 @@ public final class UserFixture {
         command.setLastName(UPDATED_LAST_NAME);
         command.setEmail(UPDATED_EMAIL);
         command.setPassword(UPDATED_PASSWORD);
-        command.setRole(UPDATED_ROLE);
+        command.setRoleId(UPDATED_ROLE);
         return command;
     }
 
@@ -94,14 +94,14 @@ public final class UserFixture {
         command.setFirstName(FIRST_NAME);
         command.setLastName(LAST_NAME);
         command.setEmail(EMAIL);
-        command.setRole(ROLE);
+        command.setRoleId(ROLE);
         return command;
     }
 
     // ── DTOs HTTP ─────────────────────────────────────────────────────────────
 
     public static UserCreatedRequest aUserCreatedRequest() {
-        return new UserCreatedRequest(FIRST_NAME, LAST_NAME, EMAIL, PASSWORD);
+        return new UserCreatedRequest(FIRST_NAME, LAST_NAME, ROLE, EMAIL, PASSWORD);
     }
 
     public static UserUpdatedRequest aPartialUserUpdatedRequest() {

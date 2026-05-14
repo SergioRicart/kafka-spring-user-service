@@ -2,7 +2,6 @@ package com.sergioricart.user_service.user.application.http.created;
 
 import com.sergioricart.commons.application.VoidResponse;
 import com.sergioricart.user_service.fixtures.UserFixture;
-import com.sergioricart.user_service.user.domain.entity.Role;
 import com.sergioricart.user_service.user.domain.entity.User;
 import com.sergioricart.user_service.user.domain.event.UserCreatedDomainEvent;
 import com.sergioricart.user_service.user.domain.port.UserEvent;
@@ -54,7 +53,7 @@ class CreateUserHandlerTest {
         assertThat(userGuardado.getLastName()).isEqualTo(UserFixture.LAST_NAME);
         assertThat(userGuardado.getEmail()).isEqualTo(UserFixture.EMAIL);
         assertThat(userGuardado.getPassword()).isEqualTo(UserFixture.PASSWORD);
-        assertThat(userGuardado.getRole()).isEqualTo(Role.USER);
+        assertThat(userGuardado.getRoleId()).isEqualTo(UserFixture.ROLE);
         assertThat(userGuardado.getCreatedAt()).isNotNull();
     }
 
