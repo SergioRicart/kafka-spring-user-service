@@ -5,6 +5,8 @@ import com.sergioricart.commons.application.Mediator;
 import com.sergioricart.commons.application.VoidResponse;
 import com.sergioricart.user_service.fixtures.UserFixture;
 import com.sergioricart.user_service.user.application.http.delete.DeleteUserCommand;
+import com.sergioricart.user_service.user.application.http.get.GetUserByIdQuery;
+import com.sergioricart.user_service.user.application.http.getAll.GetAllUsersQuery;
 import com.sergioricart.user_service.user.application.http.update.UpdateUserCommand;
 import com.sergioricart.user_service.user.domain.constant.UserConstants;
 import com.sergioricart.user_service.user.domain.exception.UserNotFoundException;
@@ -12,7 +14,13 @@ import com.sergioricart.user_service.user.infrastructure.api.contoller.UserContr
 import com.sergioricart.user_service.user.infrastructure.api.dto.request.UserCreatedRequest;
 import com.sergioricart.user_service.user.infrastructure.api.mapper.UserApiMapper;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -23,9 +31,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(UserController.class)
+@WebMvcTest(controllers = UserController.class, excludeAutoConfiguration = {SecurityAutoConfiguration.class, SecurityFilterAutoConfiguration.class})
 class UserControllerTest {
 
     @Autowired
@@ -128,6 +137,51 @@ class UserControllerTest {
                 mockMvc.perform(patch(UserFixture.UPDATE_USER_PATH + UserFixture.UNKNOWN_ID)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(UserFixture.aPartialUserUpdatedRequest()))))
+                .hasCauseInstanceOf(UserNotFoundException.class);
+    }
+
+    // ──────────────── GET /api/v1/users ────────────────
+
+    @Test
+    void getAllUsers_returns200WithUserList() throws Exception {
+        when(mediator.dispatch(any(GetAllUsersQuery.class))).thenReturn(new PageImpl<>(List.of(UserFixture.aUser())));
+        when(userApiMapper.mapToUserResponse(any())).thenReturn(UserFixture.aUserResponse());
+
+        mockMvc.perform(get(UserFixture.GET_ALL_USERS_PATH))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content[0].id").value(UserFixture.USER_ID))
+                .andExpect(jsonPath("$.content[0].firstName").value(UserFixture.FIRST_NAME));
+    }
+
+    @Test
+    void getAllUsers_whenEmpty_returns200WithEmptyList() throws Exception {
+        when(mediator.dispatch(any(GetAllUsersQuery.class))).thenReturn(new PageImpl<>(List.of()));
+
+        mockMvc.perform(get(UserFixture.GET_ALL_USERS_PATH))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content").isEmpty());
+    }
+
+    // ──────────────── GET /api/v1/users/{id} ────────────────
+
+    @Test
+    void getUserById_givenExistingId_returns200WithUser() throws Exception {
+        when(mediator.dispatch(any(GetUserByIdQuery.class))).thenReturn(UserFixture.aUser());
+        when(userApiMapper.mapToUserResponse(any())).thenReturn(UserFixture.aUserResponse());
+
+        mockMvc.perform(get(UserFixture.GET_USER_BY_ID_PATH + UserFixture.USER_ID))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(UserFixture.USER_ID))
+                .andExpect(jsonPath("$.email").value(UserFixture.EMAIL));
+    }
+
+    @Test
+    void getUserById_givenNonExistingId_propagatesUserNotFoundException() {
+        when(mediator.dispatch(any(GetUserByIdQuery.class)))
+                .thenThrow(new UserNotFoundException(UserConstants.USER_NOT_FOUND_MESSAGE));
+
+        assertThatThrownBy(() ->
+                mockMvc.perform(get(UserFixture.GET_USER_BY_ID_PATH + UserFixture.UNKNOWN_ID)))
                 .hasCauseInstanceOf(UserNotFoundException.class);
     }
 }

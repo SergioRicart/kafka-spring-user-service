@@ -6,6 +6,9 @@ import com.sergioricart.user_service.user.application.http.update.UpdateUserComm
 import com.sergioricart.user_service.user.domain.entity.User;
 import com.sergioricart.user_service.user.infrastructure.api.dto.request.UserCreatedRequest;
 import com.sergioricart.user_service.user.infrastructure.api.dto.request.UserUpdatedRequest;
+import com.sergioricart.user_service.user.infrastructure.api.dto.response.UserResponse;
+
+import java.util.List;
 
 public final class UserFixture {
 
@@ -28,9 +31,11 @@ public final class UserFixture {
     public static final String UNKNOWN_ID = "no-existe";
 
     // ── Rutas API ─────────────────────────────────────────────────────────────
-    public static final String CREATE_USER_PATH = "/api/v1/users/create";
-    public static final String DELETE_USER_PATH = "/api/v1/users/delete/";
-    public static final String UPDATE_USER_PATH = "/api/v1/users/update/";
+    public static final String CREATE_USER_PATH  = "/api/v1/users/create";
+    public static final String DELETE_USER_PATH  = "/api/v1/users/delete/";
+    public static final String UPDATE_USER_PATH  = "/api/v1/users/update/";
+    public static final String GET_ALL_USERS_PATH = "/api/v1/users";
+    public static final String GET_USER_BY_ID_PATH = "/api/v1/users/";
 
     // ── Objetos de dominio ────────────────────────────────────────────────────
 
@@ -106,5 +111,21 @@ public final class UserFixture {
 
     public static UserUpdatedRequest aPartialUserUpdatedRequest() {
         return new UserUpdatedRequest(UPDATED_FIRST_NAME, null, null, null, null, null);
+    }
+
+    // ── Responses ─────────────────────────────────────────────────────────────
+
+    public static UserResponse aUserResponse() {
+        return UserResponse.builder()
+                .id(USER_ID)
+                .firstName(FIRST_NAME)
+                .lastName(LAST_NAME)
+                .email(EMAIL)
+                .roleId(ROLE)
+                .build();
+    }
+
+    public static List<UserResponse> aUserResponseList() {
+        return List.of(aUserResponse());
     }
 }
