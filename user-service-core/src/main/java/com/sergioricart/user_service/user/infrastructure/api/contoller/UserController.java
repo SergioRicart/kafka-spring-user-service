@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -24,6 +25,9 @@ public class UserController {
 
     private final UserApiMapper apiMapper;
 
+/*
+    @PreAuthorize("hasRole('ADMIN')")
+*/
     @PostMapping("/create")
     public ResponseEntity<?> createUser(@Valid @RequestBody UserCreatedRequest userDto) {
 
@@ -37,6 +41,9 @@ public class UserController {
 
     }
 
+/*
+    @PreAuthorize("hasRole('ADMIN')")
+*/
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable String id) {
 
